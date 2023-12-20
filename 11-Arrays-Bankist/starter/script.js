@@ -376,23 +376,23 @@ btnSort.addEventListener('click', function(e){
 // Coding Challenge #1
 //---------------------------------------------------------------
 
-/*
-Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
+// /*
+// Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
 
-Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
+// Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
 
-1. Julia found out that the owners of the FIRST and the LAST TWO dogs actually have cats, not dogs! So create a shallow copy of Julia's array, and remove the cat ages from that copied array (because it's a bad practice to mutate function parameters)
-2. Create an array with both Julia's (corrected) and Kate's data
-3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 🐶")
-4. Run the function for both test datasets
+// 1. Julia found out that the owners of the FIRST and the LAST TWO dogs actually have cats, not dogs! So create a shallow copy of Julia's array, and remove the cat ages from that copied array (because it's a bad practice to mutate function parameters)
+// 2. Create an array with both Julia's (corrected) and Kate's data
+// 3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 🐶")
+// 4. Run the function for both test datasets
 
-HINT: Use tools from all lectures in this section so far 😉
+// HINT: Use tools from all lectures in this section so far 😉
 
-TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
-TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
+// TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
+// TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
 // const dogsJulia = [3, 5, 2, 12, 7];
 // const dogsKate = [4, 1, 15, 8, 3];
@@ -521,21 +521,21 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // Coding Challenge #2
 
-/*
-Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
+// /*
+// Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 
-Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
+// Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
 
-1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
-2. Exclude all dogs that are less than 18 human years old (which is the same as keeping dogs that are at least 18 years old)
-3. Calculate the average human age of all adult dogs (you should already know from other challenges how we calculate averages 😉)
-4. Run the function for both test datasets
+// 1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
+// 2. Exclude all dogs that are less than 18 human years old (which is the same as keeping dogs that are at least 18 years old)
+// 3. Calculate the average human age of all adult dogs (you should already know from other challenges how we calculate averages 😉)
+// 4. Run the function for both test datasets
 
-TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
-TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+// TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+// TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
 // const ages = [5, 2, 4, 1, 15, 8, 3];
 // const calcAverageHumanAge = function (ages){
@@ -571,14 +571,14 @@ GOOD LUCK 😀
 
 // Coding Challenge #3
 
-/*
-Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+// /*
+// Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
 
-TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
-TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+// TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+// TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
-GOOD LUCK 😀
-*/
+// GOOD LUCK 😀
+// */
 
 
 
@@ -644,46 +644,46 @@ GOOD LUCK 😀
 // Flat Method
 //------------------------------------------------------------------
 // only goes one level deep of nesting
-const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 
-console.log(arr.flat());
-// now two level of nesting
-const arrDeep = [[[1,2],3], [4,[5,6]], 7, 8];
-// now using the depth argument in the flat method to flatten it
-console.log(arrDeep.flat(2));
+// console.log(arr.flat());
+// // now two level of nesting
+// const arrDeep = [[[1,2],3], [4,[5,6]], 7, 8];
+// // now using the depth argument in the flat method to flatten it
+// console.log(arrDeep.flat(2));
 
-// to get all the movements from all the accounts.
+// // to get all the movements from all the accounts.
 
-const accountMovements = accounts.map(acc => acc.movements);
-console.log(accountMovements);
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
 
-const allMovements = accountMovements.flat();
-console.log(allMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
 
-// adding all movements to get the bank overall balnce
-const overallBalance = allMovements.reduce((acc,curr) => acc + curr, 0);
+// // adding all movements to get the bank overall balnce
+// const overallBalance = allMovements.reduce((acc,curr) => acc + curr, 0);
 
-console.log(overallBalance);
+// console.log(overallBalance);
 
-// using the chaining method
+// // using the chaining method
 
 
-const allMovementsChaining = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc,curr) => acc + curr, 0);
+// const allMovementsChaining = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc,curr) => acc + curr, 0);
 
-console.log(allMovementsChaining);
+// console.log(allMovementsChaining);
 
-////////////////////////////////////////////////////////////////////
-// FlatMAP Method
-//------------------------------------------------------------------
-// compining those nethods into one which is very common to use
-// so for performane inhancement
-// it flats one level of depth only
-const allMovementsChaining2 = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc,curr) => acc + curr, 0);
+// ////////////////////////////////////////////////////////////////////
+// // FlatMAP Method
+// //------------------------------------------------------------------
+// // compining those nethods into one which is very common to use
+// // so for performane inhancement
+// // it flats one level of depth only
+// const allMovementsChaining2 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc,curr) => acc + curr, 0);
 
 
 ////////////////////////////////////////////////////////////////////
@@ -691,40 +691,93 @@ const allMovementsChaining2 = accounts
 //------------------------------------------------------------------
 // sort method Mutates the original array
 //strings
-const owners = ['jonas', 'Zach', 'Adam', 'Martha'];
-console.log(owners.sort());
-console.log(owners);
+// const owners = ['jonas', 'Zach', 'Adam', 'Martha'];
+// console.log(owners.sort());
+// console.log(owners);
 
-// numbers
+// // numbers
+// // console.log(movements);
+// // console.log(movements.sort());
+
+// // [-130, -400, -650, 1300, 200, 3000, 450, 70]
+// // thats not sorted in any way cause the sort method does the sorting based on strings by converting every thing to string and sort them
+
+// // 1 > 4 > 6 and the negtive comes first
+
 // console.log(movements);
-// console.log(movements.sort());
+// // a and b is the current value and the next value
+// // return < 0, to arrange like that A, B (keeps order)
+// // return > 0, to arrange like that B, A (switchs order)
 
-// [-130, -400, -650, 1300, 200, 3000, 450, 70]
-// thats not sorted in any way cause the sort method does the sorting based on strings by converting every thing to string and sort them
+// // Ascending
+// // movements.sort((a,b) => {
+// //   if (a > b) return 1;
+// //   if (b > a) return -1;
+// // });
+// // Improve it
+// // returning positve value from the substraction means that a > b
+// // returning negative value from the substraction means that a < b
+// movements.sort((a, b) => a - b);
+// console.log(movements);
 
-// 1 > 4 > 6 and the negtive comes first
+// // Descinding
+// // movements.sort((a,b) => {
+// //   if (a > b) return -1;
+// //   if (b > a) return 1;
+// // });
+// // Improve it
+// movements.sort((a, b) => b - a);
+// console.log(movements);
 
-console.log(movements);
-// a and b is the current value and the next value
-// return < 0, to arrange like that A, B (keeps order)
-// return > 0, to arrange like that B, A (switchs order)
+//////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------
+//  More ways to create arrays and filling it
 
-// Ascending
-// movements.sort((a,b) => {
-//   if (a > b) return 1;
-//   if (b > a) return -1;
-// });
-// Improve it
-// returning positve value from the substraction means that a > b
-// returning negative value from the substraction means that a < b
-movements.sort((a, b) => a - b);
-console.log(movements);
+// normal ways to print or make arrays
+const arr = [1,2,3,4,5,6,7];
+console.log([1,2,3,4]);
+console.log(new Array(1,2,3,4));
+const x = new Array(7);
+// it creats an array with 7 empty elements
+console.log(x);
+// x.fill(1);
+//start filling in index 3 and end at 5
+x.fill(1,3,5)
+console.log(x);
 
-// Descinding
-// movements.sort((a,b) => {
-//   if (a > b) return -1;
-//   if (b > a) return 1;
-// });
-// Improve it
-movements.sort((a, b) => b - a);
-console.log(movements);
+// we could fill an existing array
+
+arr.fill(23,2,6);
+console.log(arr);
+
+Array.from
+const y = Array.from({length: 7}, () => 1);
+console.log(y);
+
+const z = Array.from({length: 7}, (_, i) => i+1);
+console.log(z);
+
+// creating random dice rolls from 1 to 100
+const random = Array.from(
+  {length: 100},
+  () => Math.floor(Math.random() * 100)
+  );
+console.log(random);
+
+
+// getting the movements from the UI
+// the element we got from the ui we want to convert to an array
+// so we use the array from method on it then map method to extract the text content and replace the euro sign with nothing.
+// the result of the queryselector all is a node list
+
+labelBalance.addEventListener('click', function(){
+  const movementsUI = Array.from(document.
+  querySelectorAll('.movements__value'),
+  el =>Number(el.textContent.replace('€', ''))); // putting it as the mapping function instad of calling it over the movUI
+
+  //console.log(movementsUI.map(el => Number(el.textContent.replace('€', ''))));
+  console.log(movementsUI);
+  // another way to transform the nodelist into array using destructing but we shall do the mapping separatly
+  const movementsUI2 = [...document.
+  querySelectorAll('.movements__value')];
+});
