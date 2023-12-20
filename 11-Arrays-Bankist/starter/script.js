@@ -61,11 +61,20 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+// adding the sorting feature
+// we make it by default falsy because we want the sorting to be as
+// it is, if we want to do otherwise we will call that function with
+// sort argument set to true with click event
+const displayMovements = function (movements, sort = false) {
   // to empty what is already there
   //.textContent = 0
   containerMovements.innerHTML = '';
-  movements.forEach(function (mov, i) {
+
+  // if sort is true (sorting conditionally)
+  // create a copy using slice to prevent modifying the original array
+  const movs = sort ? movements.slice().sort((a,b) => a - b) : movements
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -225,7 +234,15 @@ btnClose.addEventListener('click', function(e){
   inputClosePin.value = inputCloseUsername.value = '';
 })
 
-
+// create a state variable
+let sorted = false;
+btnSort.addEventListener('click', function(e){
+  e.preventDefault();
+  // makeing ths sort true to call the function that sorts which we deployed in the display Movements
+  displayMovements(currentAccount.movements, !sorted);
+  // every time we click we change the sorted from true to false
+  sorted = !sorted;
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -669,12 +686,45 @@ const allMovementsChaining2 = accounts
   .reduce((acc,curr) => acc + curr, 0);
 
 
+////////////////////////////////////////////////////////////////////
+// sorting arrays
+//------------------------------------------------------------------
+// sort method Mutates the original array
+//strings
+const owners = ['jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
 
+// numbers
+// console.log(movements);
+// console.log(movements.sort());
 
+// [-130, -400, -650, 1300, 200, 3000, 450, 70]
+// thats not sorted in any way cause the sort method does the sorting based on strings by converting every thing to string and sort them
 
+// 1 > 4 > 6 and the negtive comes first
 
+console.log(movements);
+// a and b is the current value and the next value
+// return < 0, to arrange like that A, B (keeps order)
+// return > 0, to arrange like that B, A (switchs order)
 
+// Ascending
+// movements.sort((a,b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// });
+// Improve it
+// returning positve value from the substraction means that a > b
+// returning negative value from the substraction means that a < b
+movements.sort((a, b) => a - b);
+console.log(movements);
 
-
-
-
+// Descinding
+// movements.sort((a,b) => {
+//   if (a > b) return -1;
+//   if (b > a) return 1;
+// });
+// Improve it
+movements.sort((a, b) => b - a);
+console.log(movements);
