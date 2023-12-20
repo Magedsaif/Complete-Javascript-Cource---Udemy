@@ -597,14 +597,14 @@ GOOD LUCK 😀
 // SOME Method
 // ----------------------------------------------------------------
 
-console.log(movements);
-console.log(movements.includes(-130)); // returns true if its exactly equal to -130
-// includes method test for equality
-// what if we want to test for condition
-// some metod is the right choice
-// returns true or false
-const anyDeposits = movements.some(mov => mov > 5000);
-console.log(anyDeposits);
+// console.log(movements);
+// console.log(movements.includes(-130)); // returns true if its exactly equal to -130
+// // includes method test for equality
+// // what if we want to test for condition
+// // some metod is the right choice
+// // returns true or false
+// const anyDeposits = movements.some(mov => mov > 5000);
+// console.log(anyDeposits);
 
 /////////////////////////////////////////////////////////////////////
 // EVERY Method
@@ -613,29 +613,60 @@ console.log(anyDeposits);
 // only returns true if all the element passes the condition in our callback function
 
 
-console.log(movements.every(mov => mov > 0));
-console.log(account4.movements.every(mov => mov > 0));
+// console.log(movements.every(mov => mov > 0));
+// console.log(account4.movements.every(mov => mov > 0));
 
-// DRY princibal
-// Dont repeat yourself
-// Seperate CallBack from the array method
-const deposit = mov => mov > 0;
-console.log(movements.every(deposit));
-console.log(movements.filter(deposit));
+// // DRY princibal
+// // Dont repeat yourself
+// // Seperate CallBack from the array method
+// const deposit = mov => mov > 0;
+// console.log(movements.every(deposit));
+// console.log(movements.filter(deposit));
+
+////////////////////////////////////////////////////////////////////
+// Flat Method
+//------------------------------------------------------------------
+// only goes one level deep of nesting
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+
+console.log(arr.flat());
+// now two level of nesting
+const arrDeep = [[[1,2],3], [4,[5,6]], 7, 8];
+// now using the depth argument in the flat method to flatten it
+console.log(arrDeep.flat(2));
+
+// to get all the movements from all the accounts.
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+// adding all movements to get the bank overall balnce
+const overallBalance = allMovements.reduce((acc,curr) => acc + curr, 0);
+
+console.log(overallBalance);
+
+// using the chaining method
 
 
+const allMovementsChaining = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc,curr) => acc + curr, 0);
 
+console.log(allMovementsChaining);
 
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////
+// FlatMAP Method
+//------------------------------------------------------------------
+// compining those nethods into one which is very common to use
+// so for performane inhancement
+// it flats one level of depth only
+const allMovementsChaining2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc,curr) => acc + curr, 0);
 
 
 
