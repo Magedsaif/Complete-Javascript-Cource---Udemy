@@ -252,156 +252,156 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-// console.log(23 === 23.0);
+/* console.log(23 === 23.0);
 
-// // Base 10 - 0 to 9
-// // Binary base 2 - 0 1
-// console.log(0.1 + 0.2);
-// console.log(0.1 + 0.2 === 0.3); // false
+Base 10 - 0 to 9
+Binary base 2 - 0 1
+console.log(0.1 + 0.2);
+console.log(0.1 + 0.2 === 0.3); // false
 
-// // conversions
-// console.log(Number('23'));
-// console.log(typeof(+'23')); // number
+conversions
+console.log(Number('23'));
+console.log(typeof(+'23')); // number
 
-// // Parsing
-// // it will get the number in the string with only the condition that the string should start with number, the second argument is radix
-// console.log(Number.parseInt('     30px', 10));
-// console.log(Number.parseInt('   e23', 10));
+Parsing
+it will get the number in the string with only the condition that the string should start with number, the second argument is radix
+console.log(Number.parseInt('     30px', 10));
+console.log(Number.parseInt('   e23', 10));
 
-// console.log(Number.parseFloat('   2.5rem   '));
+console.log(Number.parseFloat('   2.5rem   '));
 
-// // check if the value is Not A Number
-// console.log(Number.isNaN('20'));
-// console.log(Number.isNaN(20));
-// console.log(Number.isNaN(+'20X'));
-// console.log(Number.isNaN(23/0));
+check if the value is Not A Number
+console.log(Number.isNaN('20'));
+console.log(Number.isNaN(20));
+console.log(Number.isNaN(+'20X'));
+console.log(Number.isNaN(23/0));
 
-// // the besst way to Check if the value is a number
-// console.log(Number.isFinite(20));
-// console.log(Number.isFinite(20/0));
-
-
-// console.log(Number.isInteger(23));
-// console.log(Number.isInteger(23.0));
-
-////////////////////////////////////////////////////////////////////
-// Mathg & Rounding
-//------------------------------------------------------------------
-
-// console.log(Math.sqrt(25));
-// console.log(25 ** (1/2));
-// console.log(8 ** (1/3));
-// console.log(Math.max(5,18,'23',11,2)); // 23
-// console.log(Math.max(5,18,'23px',11,2)); // does not parse // NaN
-
-// console.log(Math.min(5,18,'23',11,2)); // 2
-
-// console.log(Math.PI * Number.parseFloat('10px') ** 2); // the area of a circle of 10 px
+the besst way to Check if the value is a number
+console.log(Number.isFinite(20));
+console.log(Number.isFinite(20/0));
 
 
-// console.log(Math.trunc(Math.random()* 6) + 1);
+console.log(Number.isInteger(23));
+console.log(Number.isInteger(23.0));
 
-// //function that will give us a number between min and max
-// const randomInt = (min, max) =>
-// Math.floor(Math.random() * (max - min) + 1 + min);
+////////////////////////////////////////////////////
+Mathg & Rounding
+------------------------------------------------------------------
 
-// console.log(randomInt(10, 20));
+console.log(Math.sqrt(25));
+console.log(25 ** (1/2));
+console.log(8 ** (1/3));
+console.log(Math.max(5,18,'23',11,2)); // 23
+console.log(Math.max(5,18,'23px',11,2)); // does not parse // NaN
 
+console.log(Math.min(5,18,'23',11,2)); // 2
 
-// // Rounding integars
-
-// console.log(Math.trunc(23.3)); // remove any decimal parts
-
-// // to the nearst integers
-// console.log(Math.round(23.3));
-// console.log(Math.round(23.9));
-
-// // rounded up
-// console.log(Math.ceil(23.3));
-// console.log(Math.ceil(23.9));
-
-// // rounded down
-// console.log(Math.floor(23.3));
-// console.log(Math.floor(23.9));
+console.log(Math.PI * Number.parseFloat('10px') ** 2); // the area of a circle of 10 px
 
 
-// console.log(Math.trunc(-23.3)); // -23
-// console.log(Math.floor(-23.3)); // -24
+console.log(Math.trunc(Math.random()* 6) + 1);
 
-// // Rounding Decimals
-// // number is not a primitive like strings, whish dont have methods, so Js behind the scenes do (((boxing))), means transforming it to a number object then call a metod on that object then when it finishes it will convert it back to a primitve.
-// console.log((2.7).toFixed(0)); // will alwas return a string
-// console.log((2.7).toFixed(3)); // will alwas return a string
-// console.log((2.345).toFixed(2)); // will alwas return a string
-// console.log(+(2.345).toFixed(2)); // will retuen a number
-////////////////////////////////////////////////////////////////////
-// Reminder Operator
-// ----------------------------------------------------------------
+function that will give us a number between min and max
+const randomInt = (min, max) =>
+Math.floor(Math.random() * (max - min) + 1 + min);
+
+console.log(randomInt(10, 20));
 
 
-// console.log(5%2);
-// console.log(5/2); // 5 = 2 * 2 + 1 the reminder is 1
+Rounding integars
 
-// console.log(8%3);
-// console.log(8/3); // 8 = 2 * 3 + 2 the reminder is 2
+console.log(Math.trunc(23.3)); // remove any decimal parts
 
-// console.log(6 % 2); // so its an odd number
+to the nearst integers
+console.log(Math.round(23.3));
+console.log(Math.round(23.9));
 
-// const isEven = (n) => n % 2 === 0;
+rounded up
+console.log(Math.ceil(23.3));
+console.log(Math.ceil(23.9));
 
-// console.log((isEven(2)));
-// console.log((isEven(7)));
-// console.log((isEven(8)));
-
-// // every Nth time i want to do sthg i use reminder operator
-
-// labelBalance.addEventListener('click', function() {
-//   [...document.querySelectorAll('.movements__row')].forEach(function(row, i) {
-//   if (i % 2 === 0) row.style.backgroundColor = 'orangered';
-//   if (i % 3 === 0) row.style.backgroundColor = 'blue';
-
-// });
-// })
-
-////////////////////////////////////////////////////////////////////
-// Numeric Separator
-//---------------------------------------------------------------
-
-// 287,460,000,000
-// const diameter = 287_460_000_000;
-// console.log(diameter);
+rounded down
+console.log(Math.floor(23.3));
+console.log(Math.floor(23.9));
 
 
-// const price= 345_99;
-// console.log(price);
+console.log(Math.trunc(-23.3)); // -23
+console.log(Math.floor(-23.3)); // -24
 
-// const PI = 3.14_15;
-// console.log(PI);
+Rounding Decimals
+number is not a primitive like strings, whish dont have methods, so Js behind the scenes do (((boxing))), means transforming it to a number object then call a metod on that object then when it finishes it will convert it back to a primitve.
+console.log((2.7).toFixed(0)); // will alwas return a string
+console.log((2.7).toFixed(3)); // will alwas return a string
+console.log((2.345).toFixed(2)); // will alwas return a string
+console.log(+(2.345).toFixed(2)); // will retuen a number
+////////////////////////////////////////////////////
+Reminder Operator
+----------------------------------------------------------------
 
-// console.log(Number('230_000')); // NaN
 
-////////////////////////////////////////////////////////////////////
-// BIGINT
-//------------------------------------------------------------------
+console.log(5%2);
+console.log(5/2); // 5 = 2 * 2 + 1 the reminder is 1
+
+console.log(8%3);
+console.log(8/3); // 8 = 2 * 3 + 2 the reminder is 2
+
+console.log(6 % 2); // so its an odd number
+
+const isEven = (n) => n % 2 === 0;
+
+console.log((isEven(2)));
+console.log((isEven(7)));
+console.log((isEven(8)));
+
+every Nth time i want to do sthg i use reminder operator
+
+labelBalance.addEventListener('click', function() {
+  [...document.querySelectorAll('.movements__row')].forEach(function(row, i) {
+  if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+  if (i % 3 === 0) row.style.backgroundColor = 'blue';
+
+});
+})
+
+////////////////////////////////////////////////////
+Numeric Separator
+---------------------------------------------------------------
+
+287,460,000,000
+const diameter = 287_460_000_000;
+console.log(diameter);
+
+
+const price= 345_99;
+console.log(price);
+
+const PI = 3.14_15;
+console.log(PI);
+
+console.log(Number('230_000')); // NaN
+
+////////////////////////////////////////////////////
+BIGINT
+------------------------------------------------------------------
 console.log(2 ** 53 - 1); // biggest number that JS can represent
 console.log(Number.MAX_SAFE_INTEGER); // same
 
-// but if we want more than rhese in real world apps like id's in an api
-// the n transforms the regular number into a big int number
+but if we want more than rhese in real world apps like id's in an api
+the n transforms the regular number into a big int number
 
 console.log(46354654736251436254365847368542313543568432135645n);
 
-// operations
+operations
 
 console.log(10000n + 10000n);
 console.log(6354654654365465435463546n * 32143543541321354351431n);
-// console.log(Math.sqrt(16n)); // error
-// but we can not mix bigInt's with regular numbers.
+console.log(Math.sqrt(16n)); // error
+but we can not mix bigInt's with regular numbers.
 
 const huge = 13213643621325416513213143n;
 const num = 23;
 
-// exceptions
+exceptions
 
 console.log(huge * BigInt(num));
 
@@ -414,15 +414,53 @@ console.log(typeof 20n); // bigint
 
 console.log( huge + ' is really big 111');
 
-//divisions
+divisions
 
 console.log(10n /3n); // 3n >>> nearst possible
 
+/////////////////////////////////////////////////////
+Creating Dates
+-----------------------------------------------------------------
 
+create a date
+ */
 
+/*
+const now = new Date();
+console.log(now);
 
+console.log(new Date('Fri Dec 22 2023 19:53:59'));
+console.log(new Date('December 24, 2015'));
+console.log(new Date(account1.movementsDates[0]));
 
+console.log(new Date(2037, 8, 30, 15, 23, 5));
 
+// starting ti,e since the beginig of UNIX System
+console.log(new Date(0));
+
+console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+ */
+
+// working with dates
+const future = new Date(2037, 10, 19, 15, 23, 5);
+console.log(future.getFullYear()); //2037
+console.log(future.getMonth()); // 10 cause its a zero based
+console.log(future.getDay()); // day 4 caust its a day week
+console.log(future.getHours()); // 15
+console.log(future.getMinutes()); // 23
+console.log(future.getSeconds()); // 5
+console.log(future.toISOString()); // 2037-11-19T13:23:05.000Z to string
+// gives me the time passed tsince that date
+console.log(future.getTime());
+// the millisecond based on that has passed since 1970
+console.log(new Date(2142249785000));
+// time stamp of current moment since 1970
+console.log(Date.now());
+
+// changing the year
+future.setFullYear(2040);
+console.log(future);
 
 
 
