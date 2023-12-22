@@ -81,7 +81,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const formatMovementDate = function(date) {
+const formatMovementDate = function(date, locale) {
 
   const calcDaysPassed = (date1, date2) =>
   Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -92,10 +92,11 @@ const formatMovementDate = function(date) {
   if (daysPassed === 1) return 'yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  const day = `${date.getDate()}`.padStart(2, 0); // 09 08 07
-  const month = `${date.getMonth() + 1}`.padStart(2, 0); // the +1 because it's a zero based.
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
+  // const day = `${date.getDate()}`.padStart(2, 0); // 09 08 07
+  // const month = `${date.getMonth() + 1}`.padStart(2, 0); // the +1 because it's a zero based.
+  // const year = date.getFullYear();
+  // return `${day}/${month}/${year}`;
+  return new Intl.DateTimeFormat(locale).format(date);
 }
 
 
@@ -110,7 +111,7 @@ const displayMovements = function (acc, sort = false) {
 
     const date = new Date(acc.movementsDates[i]);
 
-    const displayDate = formatMovementDate(date)
+    const displayDate = formatMovementDate(date, acc.locale);
 
     const html = `
       <div class="movements__row">
@@ -186,7 +187,27 @@ updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
 
+// Experimenting INTL API
+// we now correctedly formatted the datefor any country around the world
 const now = new Date();
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+  // weekday: 'short'
+};
+// const locale = navigator.language;
+labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now);
+
+
+
+
+
+
+
+/* const now = new Date();
 const day = `${now.getDate()}`.padStart(2, 0); // 09 08 07
 const month = `${now.getMonth() + 1 }`.padStart(2, 0); // because it's a zero based
 const year = now.getFullYear();
@@ -195,7 +216,7 @@ const min = `${now.getMinutes() + 1 }`.padStart(2, 0)
 
 const dateFormatted = `${day}/${month}/${year}, ${hour}:${min}`
 // this will view a static time, if we want to display the current time we would need syjg called (((((TIMER))))) whish we will study later
-labelDate.textContent = dateFormatted;
+labelDate.textContent = dateFormatted; */
 
 
 // day / month / year / format
@@ -216,6 +237,20 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
+
+    const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      // weekday: 'short'
+    };
+    // const locale = navigator.language;
+    labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now);
+
+
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -529,7 +564,7 @@ console.log(future);
 // Operations with Dates
 // -----------------------------------------------------------------
 
-const future = new Date(2037, 10, 19, 15, 23, 5);
+/* const future = new Date(2037, 10, 19, 15, 23, 5);
 console.log(+future); // gonna give me the Timestamp of That Date
 
 // function that takes two dates and give the days between them
@@ -541,4 +576,8 @@ const days1 = calcDaysPassed(
   new Date(2037, 3, 4),
   new Date(2037, 3, 14, 10, 8));
 
-console.log(days1);
+console.log(days1); */
+
+/////////////////////////////////////////////////////////////////////
+// internationalizating Dates (INTL)
+// -----------------------------------------------------------------
