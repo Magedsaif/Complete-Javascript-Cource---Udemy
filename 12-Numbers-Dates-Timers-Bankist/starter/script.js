@@ -368,30 +368,55 @@ btnSort.addEventListener('click', function (e) {
 //---------------------------------------------------------------
 
 // 287,460,000,000
-const diameter = 287_460_000_000;
-console.log(diameter);
+// const diameter = 287_460_000_000;
+// console.log(diameter);
 
 
-const price= 345_99;
-console.log(price);
+// const price= 345_99;
+// console.log(price);
 
-const PI = 3.14_15;
-console.log(PI);
+// const PI = 3.14_15;
+// console.log(PI);
 
-console.log(Number('230_000')); // NaN
+// console.log(Number('230_000')); // NaN
+
+////////////////////////////////////////////////////////////////////
+// BIGINT
+//------------------------------------------------------------------
+console.log(2 ** 53 - 1); // biggest number that JS can represent
+console.log(Number.MAX_SAFE_INTEGER); // same
+
+// but if we want more than rhese in real world apps like id's in an api
+// the n transforms the regular number into a big int number
+
+console.log(46354654736251436254365847368542313543568432135645n);
+
+// operations
+
+console.log(10000n + 10000n);
+console.log(6354654654365465435463546n * 32143543541321354351431n);
+// console.log(Math.sqrt(16n)); // error
+// but we can not mix bigInt's with regular numbers.
+
+const huge = 13213643621325416513213143n;
+const num = 23;
+
+// exceptions
+
+console.log(huge * BigInt(num));
+
+console.log(20n > 15); // true
+
+console.log(20n === 20); // false
+
+console.log(typeof 20n); // bigint
 
 
+console.log( huge + ' is really big 111');
 
+//divisions
 
-
-
-
-
-
-
-
-
-
+console.log(10n /3n); // 3n >>> nearst possible
 
 
 
