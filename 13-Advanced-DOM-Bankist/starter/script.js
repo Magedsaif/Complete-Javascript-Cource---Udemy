@@ -142,3 +142,39 @@ logo.classList.remove('c', 'j');
 logo.classList.toggle('c');
 logo.classList.contains('c'); // not includes
 */
+/////////////////////////////////////////////////////////////////////
+// lec.7 Smooth Scrolling
+//-------------------------------------------------------------------
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect(); //getting coordinates
+  console.log(s1coords);
+  console.log(e.target.getBoundingClientRect()); //relative to view port
+
+  console.log('current scroll (X/Y)', window.scrollX, window.scrollY);
+
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // //scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   rs1coords.top + window.scrollY
+  // ); // top is relative to view port and not the document so we added the page
+
+  // old school, works but manually calculate the coordinates and add to it to go to a certain positions
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  //modern way of doing the smooth scroll
+  section1.scrollIntoView({behavior:'smooth'});
+});
