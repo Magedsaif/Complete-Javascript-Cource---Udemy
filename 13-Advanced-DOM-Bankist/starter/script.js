@@ -35,7 +35,7 @@ document.addEventListener('keydown', function (e) {
 ////////////////////////////////////////////////////////////////////
 //Lec 5. Selecting, Creating AND Deleting Elements
 // -----------------------------------------------------------------
-console.log(document.documentElement);
+/* console.log(document.documentElement);
 console.log(document.body);
 console.log(document.head);
 
@@ -83,6 +83,62 @@ document
     message.remove(); // its recent, the other way
     // message.parentElement.removeChild(message); (DOM traversing)
   });
+ */
+//////////////////////////////////////////////////////////////////
+// LEC.6 Styles, Attributes and Classes
+//----------------------------------------------------------------
 
+/* //Styles
+message.style.backgroundColor = '#37383d'; // inline styling to the elemnt
+message.style.width = '120%'; // inline styling to the elemnt
 
-  //////////////////////////////////////////////////////////////////
+console.log(message.style.color); // that wont give anyhting cause it only works for the inline style that we set ourselves
+
+console.log(message.style.backgroundColor);
+
+console.log(getComputedStyle(message)); // contains all the properties and styles
+
+console.log(getComputedStyle(message).color); // return the color
+
+console.log(getComputedStyle(message).height); // even if we did not compute it by ourselves the browser set it automatically
+
+// we could use getComputedStyle method to add certain values to any element property
+// we used Number.parseFloat() to get the 40 out of the returned string and convert it into numbers in order to add to this property
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 30 + 'px';
+
+// this well chang the color of the property we customized in the root of our CSS to any color we want across the document.
+// with a simple line of code we could change the color in all of our documnet
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Attributes
+// we can access that atts
+
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.src);
+//Non-standard
+// console.log(logo.designer);
+console.log(logo.className);
+console.log(logo.getAttribute('designer')); // way to read non `standard attributes
+
+logo.alt = 'Beutiful logoooooo';
+//creating atts
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.twitter-link');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attributes
+console.log(logo.dataset.versionNumber);
+
+//Classes
+
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // not includes
+*/
