@@ -176,5 +176,29 @@ btnScrollTo.addEventListener('click', function (e) {
   // });
 
   //modern way of doing the smooth scroll
-  section1.scrollIntoView({behavior:'smooth'});
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
+////////////////////////////////////////////////////////////////////
+// Events and its types
+//------------------------------------------------------------------
+
+const h1 = document.querySelector('h1');
+// addeventlistner is way better cause it allow us to add multiple evenlisners to the same event, and we can remove an event handler in case we dont need it anymore
+
+const alertH1 = function (e) {
+  alert('addEventListner: Great! you are reading the heading');
+  //remove after i click ok on the alert listening once
+  h1.removeEventListener('mouseenter', alertH1);
+};
+
+h1.addEventListener('mouseenter', alertH1);
+// removing the alert after certain time
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+
+// another way to attach eventlistner to an element
+// old way
+// h1.onmouseenter = function (e) {
+//   alert('onmouseenter: Great! you are reading the heading');
+// };
+// on HTML onclick="alert('HTML alert')
