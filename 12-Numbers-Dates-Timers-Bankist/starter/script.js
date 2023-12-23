@@ -186,15 +186,41 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  //setting the time to 5 minutes
+
+  const tick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // in each call, print the remaining time to the user
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // when 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Login to get started';
+      containerApp.style.opacity = 0;
+    }
+    // decrease by 1s
+    time--;
+  };
+  let time = 120;
+
+  // call the timer every second
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // Fake Always logged in
 
 currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 // Experimenting INTL API
 // we now correctedly formatted the datefor any country around the world
@@ -208,10 +234,10 @@ const options = {
   // weekday: 'short'
 };
 // const locale = navigator.language;
-labelDate.textContent = new Intl.DateTimeFormat(
-  currentAccount.locale,
-  options
-).format(now);
+// labelDate.textContent = new Intl.DateTimeFormat(
+//   currentAccount.locale,
+//   options
+// ).format(now);
 
 /* const now = new Date();
 const day = `${now.getDate()}`.padStart(2, 0); // 09 08 07
@@ -262,6 +288,11 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // timer
+    // to seperate the timer of each user
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -292,6 +323,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // reset the timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -312,6 +347,10 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(currentAccount);
+
+      // reset the timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2500);
   }
   inputLoanAmount.value = '';
@@ -619,7 +658,7 @@ console.log(navigator.language, new Intl.NumberFormat(navigator.language,Options
 // if there is an arguments it will be accepted after the intervals
 // we also can cancel the timer at least until the delay has actually passed
 
-const ingredients = ['olives', 'spinach'];
+/* const ingredients = ['olives', 'spinach'];
 
 const pizzaTimer = setTimeout(
   (ing1, ing2) => console.log(`here is your pizza with ${ing1} and ${ing2}`),
@@ -644,3 +683,4 @@ setInterval(function () {
 
   console.log(formattedTime);
 }, 1000);
+ */
