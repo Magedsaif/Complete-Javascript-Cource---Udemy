@@ -195,10 +195,33 @@ h1.addEventListener('mouseenter', alertH1);
 // removing the alert after certain time
 setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
-
 // another way to attach eventlistner to an element
 // old way
 // h1.onmouseenter = function (e) {
 //   alert('onmouseenter: Great! you are reading the heading');
 // };
 // on HTML onclick="alert('HTML alert')
+
+////////////////////////////////////////////////////////////////////
+// Event propagation: Bubbling and capturing
+//------------------------------------------------------------------
+
+// rgb(255,255,255)
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rbg(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+console.log(randomColor(0, 255));
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor(0, 255);
+});
+
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function (e) {});
+
+document.querySelector('.nav').addEventListener('click', function (e) {});
