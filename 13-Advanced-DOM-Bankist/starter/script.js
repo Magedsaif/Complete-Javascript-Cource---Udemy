@@ -208,20 +208,33 @@ setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // rgb(255,255,255)
 
+
+// IMPORTANT NOTE: events are captured when come down from the document route all the way down to the target, but our event handlers are not picking up these events during the capture phase and that is the default behavior.
+
+// bubbling phase is useful for event delegation
+// but if you want to catch an events in the capturing phase you can define a third parameters in the addeventlistner function for true and false
+// true to make it catch the event in the capturing phase
+// its false by default
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
-
 const randomColor = () =>
-  `rbg(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
-
-console.log(randomColor(0, 255));
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
 document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor(0, 255);
+  this.style.backgroundColor = randomColor();
+  console.log(`Link`, e.target ,e.currentTarget );
+  console.log(e.currentTarget === this);
+  // this Keyword is the one pointing to the elementon which the eventlistner is attached to
+
+  //Stop probagation
+  // e.stopPropagation();
+});
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log(`container`, e.target, e.currentTarget);
 });
 
-document
-  .querySelector('.nav__links')
-  .addEventListener('click', function (e) {});
-
-document.querySelector('.nav').addEventListener('click', function (e) {}); 
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log(`NAV`, e.target, e.currentTarget);
+});
