@@ -119,7 +119,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
-  //guard clause so if i clicked in any other places and gave me null cause the click then desnt have a closest element called operations tab so it returs from the function
+  //guard clause so if i clicked in any other places and gave me null cause the click then doesnt have a closest element called operations__tab so it returs from the function
 
   if (!clicked) return;
 
@@ -176,7 +176,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 //-------------------------------------------------------------------
 // we will use the scroll event
 // is isnt efficient because each time we scroll we fire an event
-
+/*
 const initialCoords = section1.getBoundingClientRect();
 console.log(initialCoords); // top property in it defines the space from the top to end of sec 1 in ANY VIEW PORT we are using
 
@@ -186,47 +186,49 @@ window.addEventListener('scroll', function(){
   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 
+}); */
+
+//////////////////////////////////////////////////////////////////////
+// lec 16. Sticky navigation : Intersection Observer API
+//-------------------------------------------------------------------
+// this Api allows our code to observe changes to the way that a certain target element intersects anothr elements or the element intersects the viewport
+
+// The callback function will be called each time the observed element (target element ==> section1) is intersecting the root element at the threshold we defined
+
+// const obsCallback = function (entries, observer) {
+//   // entries is an array of the thresholds
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   })
+// };
+
+// const obsOptions = {
+//   root: null, // the entire viewport
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+
+const header = document.querySelector('.header');
+// to calculate the rootMargin automatically
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function(entries){
+  const [entry] = entries; //gettig the elements of entries (here they are just one)
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+}
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px` // box of navHeight px that is outside the header(our targert)
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+headerObserver.observe(header);
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
