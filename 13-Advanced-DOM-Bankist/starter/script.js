@@ -1,6 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // Modal window
 
 const modal = document.querySelector('.modal');
@@ -29,6 +29,87 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+//////////////////////////////////////////////////////////////////////
+// Button scrolling
+//-------------------------------------------------------------------
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect(); //getting coordinates
+  console.log(s1coords);
+  console.log(e.target.getBoundingClientRect()); //relative to view port
+
+  console.log('current scroll (X/Y)', window.scrollX, window.scrollY);
+
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // //scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   rs1coords.top + window.scrollY
+  // ); // top is relative to view port and not the document so we added the page
+
+  // old school, works but manually calculate the coordinates and add to it to go to a certain positions
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  //modern way of doing the smooth scroll
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+//////////////////////////////////////////////////////////////////////
+// Smooth Page Navigation
+//-------------------------------------------------------------------
+
+// first we will implemenmt it without using event delegation.
+
+/* document.querySelectorAll('.nav__link').forEach(function(el){
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+
+    const id = this.getAttribute('href');
+    console.log(id);
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  })
+})
+ */
+
+// tip from MDN to improve performance using event delegation
+
+/*
+Another tip is to use event delegation wherever possible. When you have some code to run in response to a user interacting with any one of a large number of child elements, you can set an event listener on their parent. Events fired on any child element will bubble up to their parent, so you don't need to set the event listener on each child individually. Less event listeners to keep track of means better performance.
+*/
+
+// Thats Not A Clean Solution So We Need to use event delegation
+
+// 1. add event listners to common parent element of all the elements thats we are interested in
+// 2. determine what element originated the event, then work with that element
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  // now we need to know where the event had happend
+  e.preventDefault();
+  // Matching strategy
+  // this is important to ignore the clicks that not happend right on the elements itself
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
 // Dom is the interface between our code and the browser (HTML Documents that is rendered in and by the browser)
 // we can use it to make  hs interact with the browser
 // DOM is a very complex API that contains methods and properties to interact with the DOM tree
@@ -145,7 +226,7 @@ logo.classList.contains('c'); // not includes
 /////////////////////////////////////////////////////////////////////
 // lec.7 Smooth Scrolling
 //-------------------------------------------------------------------
-
+/* 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
@@ -177,7 +258,7 @@ btnScrollTo.addEventListener('click', function (e) {
 
   //modern way of doing the smooth scroll
   section1.scrollIntoView({ behavior: 'smooth' });
-});
+}); */
 ////////////////////////////////////////////////////////////////////
 // Events and its types
 //------------------------------------------------------------------
@@ -208,14 +289,14 @@ setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // rgb(255,255,255)
 
-
 // IMPORTANT NOTE: events are captured when come down from the document route all the way down to the target, but our event handlers are not picking up these events during the capture phase and that is the default behavior.
 
 // bubbling phase is useful for event delegation
 // but if you want to catch an events in the capturing phase you can define a third parameters in the addeventlistner function for true and false
 // true to make it catch the event in the capturing phase
 // its false by default
-const randomInt = (min, max) =>
+
+/* const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 const randomColor = () =>
   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
@@ -238,3 +319,4 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   console.log(`NAV`, e.target, e.currentTarget);
 });
+ */
