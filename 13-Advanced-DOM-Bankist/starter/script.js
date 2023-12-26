@@ -1,5 +1,12 @@
 'use strict';
+// Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
+const nav = document.querySelector('.nav');
 //////////////////////////////////////////////////////////////////////
 // Modal window
 
@@ -33,9 +40,6 @@ document.addEventListener('keydown', function (e) {
 //////////////////////////////////////////////////////////////////////
 // Button scrolling
 //-------------------------------------------------------------------
-
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect(); //getting coordinates
@@ -107,11 +111,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-// Tabbed Component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
 //this is not a good practice
 // tabs.forEach(t => t.addEventListener('click', () => console.log('TAB')));
 
@@ -132,8 +131,45 @@ tabsContainer.addEventListener('click', function (e) {
   clicked.classList.add('operations__tab--active');
 
   //Activate content area
-  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
+
+//////////////////////////////////////////////////////////////////////
+// lec 14. Menu Fade Animation
+//-------------------------------------------------------------------
+
+// handling the  events of whole the nav links throughout the event delegation
+
+// mouseover bubbles unlike the mouse enter
+// the opposite is mouseout and mouseleave
+
+// in order to DRY our code
+// REFACTOR to a new function called handleHover
+
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    // we use e.target and not closest method because there are no any other element that i could click by mistake
+
+    const link = e.target;
+
+    //selecting the siblings with certain match so we use closest
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    // changing the opacity of the siblings link
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+// bind method passing an "argument" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
