@@ -106,6 +106,35 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+// Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+//this is not a good practice
+// tabs.forEach(t => t.addEventListener('click', () => console.log('TAB')));
+
+// we should use event delegations
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  //guard clause so if i clicked in any other places and gave me null cause the click then desnt have a closest element called operations tab so it returs from the function
+
+  if (!clicked) return;
+
+  // remove active classes
+  //putting the other tabs down when a one has been clicked.
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  clicked.classList.add('operations__tab--active');
+
+  //Activate content area
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+});
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -327,7 +356,7 @@ document.querySelector('.nav').addEventListener('click', function (e) {
 
 //const h1 = document.querySelector('h1');
 
-// Going downwards: child
+/* // Going downwards: child
 console.log(h1.querySelectorAll('.highlight'));
 console.log(h1.childNodes);
 console.log(h1.children);
@@ -358,3 +387,8 @@ console.log(h1.parentElement.children);
     el.style.transform = 'scale(0.5)';
   }
 });
+ */
+
+/////////////////////////////////////////////////////////////////////
+// Lec.13 Tapped Component
+// -------------------------------------------------------------------
