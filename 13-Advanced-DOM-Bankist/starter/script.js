@@ -171,6 +171,63 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+//////////////////////////////////////////////////////////////////////
+// lec 15. Sticky navigation
+//-------------------------------------------------------------------
+// we will use the scroll event
+// is isnt efficient because each time we scroll we fire an event
+
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords); // top property in it defines the space from the top to end of sec 1 in ANY VIEW PORT we are using
+
+window.addEventListener('scroll', function(){
+  console.log(window.scrollY);
+  // it should be stick at end of section 1
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
