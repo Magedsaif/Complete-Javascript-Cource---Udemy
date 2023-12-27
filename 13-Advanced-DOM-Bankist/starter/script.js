@@ -247,7 +247,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSection.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 ////////////////////////////////////////////////////////////////////
@@ -259,15 +259,15 @@ allSection.forEach(function (section) {
 // selecting all the elements that contains the data-src attribute
 const imgTargets = document.querySelectorAll('img[data-src]');
 
-const loadImg = function(entries, observer){
+const loadImg = function (entries, observer) {
   const [entry] = entries;
   // guard clause to prevent the notintersection entry from happening
-  if(!entry.isIntersecting) return;
+  if (!entry.isIntersecting) return;
 
   // Replace src with data-src
   entry.target.src = entry.target.dataset.src;
   entry.target.classList.remove('lazy-img');
-  entry.target.addEventListener('load', function(){
+  entry.target.addEventListener('load', function () {
     entry.target.classList.remove('lazy-img');
   });
   observer.unobserve(entry.target);
@@ -276,14 +276,65 @@ const loadImg = function(entries, observer){
 const options = {
   root: null,
   threshold: 0,
-  rootMargin: '+200px'
+  rootMargin: '+200px',
 };
 
+const imgObserver = new IntersectionObserver(loadImg, options);
 
-const imgObserver = new IntersectionObserver(loadImg, options)
+imgTargets.forEach(img => imgObserver.observe(img));
 
-imgTargets.forEach(img => imgObserver.observe(img))
+////////////////////////////////////////////////////////////////////
+//Lec 19. Slider Component pt.1
+// -----------------------------------------------------------------
 
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+
+// 4 images : 0%, 100%, 200%, 300%
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+// to make it go to the slide zero
+goToSlide(0);
+
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+
+  goToSlide(curSlide);
+};
+
+const privSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+};
+
+// Next slide by changing the percentage of transform
+btnRight.addEventListener('click', function () {
+  nextSlide();
+});
+btnLeft.addEventListener('click', function () {
+  privSlide();
+});
+// when first slide (click) applied
+// curSlide = 1
+// 4 images : -100%, 0%, 100%, 200%
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
