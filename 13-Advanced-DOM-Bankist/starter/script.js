@@ -229,6 +229,52 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   rootMargin: `-${navHeight}px` // box of navHeight px that is outside the header(our targert)
 });
 headerObserver.observe(header);
+////////////////////////////////////////////////////////////////////
+//Lec 17. Revealing Elements on Scroll
+// -----------------------------------------------------------------
+const revealSection = function(entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+if(!entry.isIntersecting) return;
+entry.target.classList.remove('section--hidden');
+// better for performance
+observer.unobserve(entry.target);
+};
+const allSection = document.querySelectorAll('.section')
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root:null,
+  threshold: 0.15,
+});
+
+allSection.forEach(function(section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
