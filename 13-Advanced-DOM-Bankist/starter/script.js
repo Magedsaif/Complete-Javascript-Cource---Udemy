@@ -210,71 +210,79 @@ window.addEventListener('scroll', function(){
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
 
-
 const header = document.querySelector('.header');
 // to calculate the rootMargin automatically
 
 const navHeight = nav.getBoundingClientRect().height;
 
-const stickyNav = function(entries){
+const stickyNav = function (entries) {
   const [entry] = entries; //gettig the elements of entries (here they are just one)
 
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
-}
+};
 
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
   threshold: 0,
-  rootMargin: `-${navHeight}px` // box of navHeight px that is outside the header(our targert)
+  rootMargin: `-${navHeight}px`, // box of navHeight px that is outside the header(our targert)
 });
 headerObserver.observe(header);
 ////////////////////////////////////////////////////////////////////
 //Lec 17. Revealing Elements on Scroll
 // -----------------------------------------------------------------
-const revealSection = function(entries, observer) {
+const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
-if(!entry.isIntersecting) return;
-entry.target.classList.remove('section--hidden');
-// better for performance
-observer.unobserve(entry.target);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  // better for performance
+  observer.unobserve(entry.target);
 };
-const allSection = document.querySelectorAll('.section')
+const allSection = document.querySelectorAll('.section');
 
 const sectionObserver = new IntersectionObserver(revealSection, {
-  root:null,
+  root: null,
   threshold: 0.15,
 });
 
-allSection.forEach(function(section) {
+allSection.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
-})
+});
+
+////////////////////////////////////////////////////////////////////
+//Lec 18. Lazy loading images
+// -----------------------------------------------------------------
+
+// the idea is to put a small sized img and blur it, then when we approachit we substitute it with the original size img, that inhance the performance and the initial loading of the page.
+
+// selecting all the elements that contains the data-src attribute
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function(entries, observer){
+  const [entry] = entries;
+  // guard clause to prevent the notintersection entry from happening
+  if(!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  entry.target.classList.remove('lazy-img');
+  entry.target.addEventListener('load', function(){
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+const options = {
+  root: null,
+  threshold: 0,
+  rootMargin: '+200px'
+};
 
 
+const imgObserver = new IntersectionObserver(loadImg, options)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+imgTargets.forEach(img => imgObserver.observe(img))
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
