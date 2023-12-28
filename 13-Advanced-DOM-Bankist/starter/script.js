@@ -287,8 +287,6 @@ imgTargets.forEach(img => imgObserver.observe(img));
 //Lec 19 & 20. Slider Component pt.1 & 2
 // -----------------------------------------------------------------
 
-
-
 // Seprate functionalitu for slider component
 ///////////////////////////////////////
 // Slider
@@ -632,3 +630,26 @@ console.log(h1.parentElement.children);
 /////////////////////////////////////////////////////////////////////
 // Lec.13 Tapped Component
 // -------------------------------------------------------------------
+
+/////////////////////////////////////////////////////////////////////
+// Lec.21 life cycle of dom events
+//-------------------------------------------------------------------
+// DOMContentLoaded is an event that fires by document when the HTML is compeletely parsed and converted to the DOM
+// it doesn't wait for images and other externel resources to be loaded
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML PARSED AND DOM TREE BUILT', e);
+});
+
+// Load Event is firedby window if all the images and externell resources are loaded also
+
+window.addEventListener('load', function(e){
+  console.log(`Page fully loaded`, e);
+})
+
+// beforeUnload event which get fired on window
+// used to ask the user if they are sure that they want to leave the page
+// window.addEventListener('beforeunload', function (e){
+//   e.preventDefault();
+//   console.log(e);
+//   e.returnValue = '';
+// });
