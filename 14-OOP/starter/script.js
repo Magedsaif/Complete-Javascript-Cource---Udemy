@@ -30,3 +30,26 @@ console.log(jack);
 const jay = 'jay';
 console.log(jay instanceof Person);
 console.log(jonas instanceof Person);
+
+
+// Prototypes
+// protoype property of the person constructor function, so all the objects that are created  through this constructor  function will inherit, so they will get access to all the methods and properties on this prototype
+
+console.log(Person.prototype);
+Person.prototype.calcAge = function () {
+      console.log(2037 - this.birthYear);
+  };
+// THIS KEYWORD IS SET TO THE OBJECT THAT IS CALLING THE METHOD.
+jonas.calcAge(); // 46
+matilda.calcAge();
+jack.calcAge();
+console.log(jonas.__proto__); // return the prototype of jonas
+console.log(jonas.__proto__ === Person.prototype);
+console.log(Person.prototype.isPrototypeOf(jonas));
+console.log(Person.prototype.isPrototypeOf(Person)); //false
+
+Person.prototype.species = 'homo sepians';
+console.log(jonas, matilda);
+
+console.log(jonas.hasOwnProperty('firstName')); // true
+console.log(jonas.hasOwnProperty('species')); // false because that is not over the jonas object but because it's prototype of Person
