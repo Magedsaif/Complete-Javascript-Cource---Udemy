@@ -135,21 +135,41 @@ BMW.brake();
 //class declaration
 
 class PersonCl {
-    constructor(firstName, birthYear) {
-        this.firstName = firstName;
+    constructor(fullname, birthYear) {
+        this.fullname = fullname;
         this.birthYear = birthYear;
     }
     calcAge (){
         console.log(2037 - this.birthYear);
     }
+    // getters
+
+    get age() {
+        return 2037 - this.birthYear;
+    }
+    // each time we set the fullname in line 139 this setter method is going to  executed
+    // set a property tht already exists
+    set fullanme(name) {
+        console.log(name);
+        if (name.includes(' ')) this._fullanme = name;
+        else alert(`${name} is not a full name!`)
+    }
+    get fullanme(){
+        return this._fullanme
+    }
 }
 // all the methods we write on the class outside the constructor will be on the prototype of the class, not on the object it self
 
-const jessica = new PersonCl('jessica', 1996);
+const jessica = new PersonCl('jessica davis', 1996);
 
 console.log(jessica);
 
-jessica.calcAge();
+jessica.calcAge(); 
+
+// using getters
+
+console.log(jessica.age);
+
 
 console.log(jessica.__proto__ === PersonCl.prototype);
 
@@ -165,3 +185,38 @@ jessica.greet();
 // 2. Class are first class citizens, so we can pass them to into function as well as returning them 
 // 3.classes are executed in strict mode 
 
+
+const walter = new PersonCl('Walter white', '1965');
+
+
+
+/////////////////////////////////////////////////////////////////////
+// Setters and Getters
+//------------------------------------------------------------------
+// basically a functions that can get and set a value
+
+// setters and getters for any object in JS
+const account = {
+    owner: 'jonas',
+    movements: [200, 530, 120, 300],
+    
+    get latest() {
+        return this.movements.slice(-1).pop();
+    },
+    // anys set need one parameter
+    set latest(mov) {
+        this.movements.push(mov);
+    }
+}
+console.log(account.latest); // we write it as a property, not calling it 
+
+console.log(account.movements);
+
+account.latest = 50; // thats a property not a method so we can set it by using the equal operator
+
+console.log(account.movements);
+
+// Classes as will have setters and getters
+// see above 
+
+// Setters And Getters are used to validation
