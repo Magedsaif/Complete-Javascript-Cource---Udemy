@@ -14,7 +14,7 @@ const Person = function (firstName, birthYear) {
   //   };
 };
 
-const jonas = new Person('jonas', 1991);
+/* const jonas = new Person('jonas', 1991);
 console.log(jonas);
 
 // 1. a new empty object {} is created
@@ -29,13 +29,13 @@ console.log(matilda);
 console.log(jack);
 const jay = 'jay';
 console.log(jay instanceof Person);
-console.log(jonas instanceof Person);
+console.log(jonas instanceof Person); */
 
 ///////////////////////////////////////////////////////////////////////////
 // Prototypes
 // protoype property of the person constructor function, so all the objects that are created  through this constructor  function will inherit, so they will get access to all the methods and properties on this prototype
 
-// inheritance in constructor functions
+/* // inheritance in constructor functions
 console.log(Person.prototype);
 Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear);
@@ -84,7 +84,7 @@ Array.prototype.unique = function () {
 console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
-console.dir(x => x + 1);
+console.dir(x => x + 1); */
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -100,7 +100,7 @@ DATA CAR 2: 'Mercedes' going at 95 km/h
 
 GOOD LUCK 😀
 */
-
+/* 
 const Car = function (make, speed) {
   this.make = make;
   this.speed = speed;
@@ -123,4 +123,45 @@ BMW.accelerate();
 Mercedes.accelerate();
 Mercedes.accelerate();
 BMW.brake();
+ */
+//////////////////////////////////////////////////////////////////////
+// ES6 Classes
+//--------------------------------------------------------------------
+//two teps
+//class expression
+
+// const PersonCl = class {}
+
+//class declaration
+
+class PersonCl {
+    constructor(firstName, birthYear) {
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    }
+    calcAge (){
+        console.log(2037 - this.birthYear);
+    }
+}
+// all the methods we write on the class outside the constructor will be on the prototype of the class, not on the object it self
+
+const jessica = new PersonCl('jessica', 1996);
+
+console.log(jessica);
+
+jessica.calcAge();
+
+console.log(jessica.__proto__ === PersonCl.prototype);
+
+// the same as adding it on the class it self
+PersonCl.prototype.greet = function() {
+    console.log(`hey ${this.firstName}`);
+};
+
+jessica.greet();
+
+// Important methods
+// 1.classes are not hoisted, not like function decleration, which we can use before declaring 
+// 2. Class are first class citizens, so we can pass them to into function as well as returning them 
+// 3.classes are executed in strict mode 
 
