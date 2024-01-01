@@ -237,3 +237,31 @@ Person.hey();
 
 PersonCl.hey();
 
+///////////////////////////////////////////////////////////////////////////////////
+// Object.create
+//--------------------------------------------------------------------------------
+// third way to implement prototypal inheritance
+
+// thats the prototype of the object we are going to create and in here thats all the methods we want the person pbjects to inherit
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+// create a Person object with the above object as the prototype
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'steven';
+steven.birthYear = 2002;
+steven.calcAge();
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+
+sarah.init('sarah', 1979);
+sarah.calcAge();
