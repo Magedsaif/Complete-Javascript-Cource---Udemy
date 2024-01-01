@@ -2,17 +2,18 @@
 // constructor function
 // JS doesnt have regular classes, but we can create objects from a constructor functions.
 
-const Person = function (firstName, birthYear) {
-  //Instance properties
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-  /*
- never create a methods inside of a constructor function becaus if we are creating thousands of instances each one would carry around a copy of that method and other methods we would create which will affect the performance, instead we would use the prototype and prototype inheritance
- */
-  //   this.calcAge = function () {
-  //     console.log(2037 - this.birthYear);
-  //   };
-};
+// const Person = function (firstName, birthYear) {
+//   //Instance properties
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+
+//  never create a methods inside of a constructor function becaus if we are creating thousands of instances each one would carry around a copy of that method and other methods we would create which will affect the performance, instead we would use the prototype and prototype inheritance
+
+//
+//   //   this.calcAge = function () {
+//   //     console.log(2037 - this.birthYear);
+//   //   };
+// };
 
 /* const jonas = new Person('jonas', 1991);
 console.log(jonas);
@@ -100,7 +101,7 @@ DATA CAR 2: 'Mercedes' going at 95 km/h
 
 GOOD LUCK 😀
 */
-/* 
+/*
 const Car = function (make, speed) {
   this.make = make;
   this.speed = speed;
@@ -134,7 +135,7 @@ BMW.brake();
 
 //class declaration
 
-class PersonCl {
+/* class PersonCl {
   constructor(fullname, birthYear) {
     this.fullname = fullname;
     this.birthYear = birthYear;
@@ -264,7 +265,7 @@ console.log(steven.__proto__ === PersonProto);
 const sarah = Object.create(PersonProto);
 
 sarah.init('sarah', 1979);
-sarah.calcAge();
+sarah.calcAge(); */
 ///////////////////////////////////////////////////////////////
 
 // Coding Challenge #2
@@ -305,9 +306,8 @@ GOOD LUCK 😀
 // Mercedes.accelerate();
 // BMW.brake();
 
-
 // ES6 Way
-class Car {
+/* class Car {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
@@ -344,3 +344,60 @@ ford.brake();
 console.log(ford.speedUS);
 ford.speedUS = 50;
 console.log(ford);
+ */
+//////////////////////////////////////////////////////////////////////////////////////
+// all the above was just trying to use prototypal inheritance using
+// 1. Constructor functions
+// 2. ES6 Classes
+// 3.Object.create()
+// Now we will implement the inheritance between classes.
+// first using constructor functions
+//------------------------------------------------------------------------------------
+
+// Inheritance Between "Classes": Constructor Functions
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+// now we will build a constructor function for the student, the student is gonna be the child class from the parent class which is the Person Class
+
+const Student = function (firsName, birthYear, cource) {
+  // these two lines of code is repeatative, and if the implementation of the parent is changed so it will not reflect on the child (student) so we will remove them.
+  // this.firsName = firsName;
+  // this.birthYear = birthYear;
+  Person.call(this, firsName, birthYear);
+  this.cource = cource;
+};
+
+//Linking the prototypes
+//creating the connection between student and person, so Student.prototype object is now an object that injerits from Person.prototype
+Student.prototype = Object.create(Person.prototype);
+// we should add the above line before adding any method because object.create returns an empty object
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firsName}, and i study ${this.cource}`);
+};
+//creating a new student
+
+const mike = new Student('Mike', 2020, 'Computer Sc ience');
+
+mike.introduce();
+mike.calcAge();
+
+// this will return the prototype of the parent class
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person); // thats true because of the linking part in line 380
+
+
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
