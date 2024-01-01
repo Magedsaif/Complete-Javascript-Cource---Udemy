@@ -127,7 +127,7 @@ BMW.brake();
 //////////////////////////////////////////////////////////////////////
 // ES6 Classes
 //--------------------------------------------------------------------
-//two teps
+//two steps
 //class expression
 
 // const PersonCl = class {}
@@ -265,3 +265,82 @@ const sarah = Object.create(PersonProto);
 
 sarah.init('sarah', 1979);
 sarah.calcAge();
+///////////////////////////////////////////////////////////////
+
+// Coding Challenge #2
+
+/*
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+// Old way
+
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
+
+// Car.prototype.accelerate = function () {
+//   console.log(this.speed += 10);
+// };
+
+// Car.prototype.brake = function () {
+//   console.log(this.speed -= 5);
+// }
+
+// const BMW = new Car('BMW', 120);
+// const Mercedes = new Car('Mercedes', 95);
+
+// BMW.accelerate();
+// BMW.accelerate();
+// BMW.accelerate();
+// Mercedes.accelerate();
+// Mercedes.accelerate();
+// BMW.brake();
+
+
+// ES6 Way
+class Car {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  // instance methods
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+  }
+  // getter
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  // setter
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+const ford = new Car('Ford', 160);
+
+console.log(ford);
+
+ford.accelerate();
+ford.brake();
+// transformed a method to a property
+console.log(ford.speedUS);
+ford.speedUS = 50;
+console.log(ford);
