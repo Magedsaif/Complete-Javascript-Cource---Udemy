@@ -1,4 +1,5 @@
 'use strict';
+
 // constructor function
 // JS doesnt have regular classes, but we can create objects from a constructor functions.
 
@@ -7,7 +8,7 @@
 //   this.firstName = firstName;
 //   this.birthYear = birthYear;
 
-//  never create a methods inside of a constructor function becaus if we are creating thousands of instances each one would carry around a copy of that method and other methods we would create which will affect the performance, instead we would use the prototype and prototype inheritance
+//  never create a methods inside of a constructor function becausث if we are creating thousands of instances each one would carry around a copy of that method and other methods we would create which will affect the performance, instead we would use the prototype and prototype inheritance
 
 //
 //   //   this.calcAge = function () {
@@ -467,7 +468,7 @@ Tesla.accelerate(); */
 // Inheritance Between "Classes": ES6 Classes.
 //-------------------------------------------------------------------
 
-class PersonCl {
+/* class PersonCl {
   constructor(fullname, birthYear) {
     this.fullname = fullname;
     this.birthYear = birthYear;
@@ -524,4 +525,39 @@ const martha = new StudentCl('Marthaa jonas', 2012, 'CS');
 // const martha = new StudentCl('Marthaa jonas', 2012);
 
 martha.introduce();
-martha.calcAge();
+martha.calcAge(); */
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Inheritance Between "Classes": Object.create.
+//-----------------------------------------------------------------------------------
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+// personproto used to be the prototype of all the new person objects
+//now we want to add another prototype in the middle of the chain
+const steven = Object.create(PersonProto);
+
+
+const StudentProto = Object.create(PersonProto);
+
+const jay = Object.create(StudentProto);
+
+
+
+
+
+
+
+
+
+
+
