@@ -356,7 +356,7 @@ console.log(ford);
 
 // Inheritance Between "Classes": Constructor Functions
 
-const Person = function (firstName, birthYear) {
+/* const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
 };
@@ -399,7 +399,7 @@ console.log(mike instanceof Person); // thats true because of the linking part i
 
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
-
+ */
 // Coding Challenge #3
 
 /* 
@@ -413,7 +413,7 @@ DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 GOOD LUCK 😀
 */
 
-// First challenge
+/* // First challenge
 
 const Car = function (make, speed) {
   this.make = make;
@@ -460,4 +460,68 @@ const Tesla = new EV('Tesla', 120, 23);
 Tesla.accelerate();
 Tesla.brake();
 Tesla.chargeBattery(90);
-Tesla.accelerate();
+Tesla.accelerate(); */
+
+
+/////////////////////////////////////////////////////////////////////
+// Inheritance between Classes using ES6 Classes.
+//-------------------------------------------------------------------
+
+class PersonCl {
+  constructor(fullname, birthYear) {
+    this.fullname = fullname;
+    this.birthYear = birthYear;
+  }
+  // instance methods
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+  // getters
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  // each time we set the fullname in line 139 this setter method is going to  executed
+  // set a property tht already exists
+  set fullname(name) {
+  console.log(name);
+  if (name.includes(' ')) this._fullname = name;
+    else alert(`${name} is not a full name!`);
+  }
+  get fullname() {
+    return this._fullname;
+  }
+
+  // static methods
+  static hey() {
+    console.log(`hey there`);
+  }
+}
+
+// the extend keyword will link the prototypes behind the scenes
+class StudentCl extends PersonCl {
+  constructor(fullname, birthYear, cource) {
+    // we here dont need to use call function like we did before in the constructor function
+    // we call Super function which is the constructor function of the Parent class.
+
+    // so here we pass the parameters of the parent constructor
+    // always needs to happen first because it is responsible for creating the this keyword in the subclass(child class)
+    super(fullname, birthYear)
+    this.cource = cource;
+  }
+  introduce(){
+    console.log(`my name is ${this._fullname} and i study ${this.cource}`);
+  }
+  //overwritting the calcage in the parent class because it appears first in the prototype chain (shadowing the one in parent class)
+  calcAge(){
+    console.log(`i'm ${2037 - this.birthYear} old, but i feel like i'm ${2037 - this.birthYear + 10}`);
+  }
+}
+
+const martha = new StudentCl('Marthaa jonas', 2012, 'CS');
+
+// we could hash all of the constructor and the studentCL will just inherit the properties of the parent class only
+// const martha = new StudentCl('Marthaa jonas', 2012);
+
+martha.introduce();
+martha.calcAge();
