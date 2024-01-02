@@ -464,7 +464,7 @@ Tesla.accelerate(); */
 
 
 /////////////////////////////////////////////////////////////////////
-// Inheritance between Classes using ES6 Classes.
+// Inheritance Between "Classes": ES6 Classes.
 //-------------------------------------------------------------------
 
 class PersonCl {
