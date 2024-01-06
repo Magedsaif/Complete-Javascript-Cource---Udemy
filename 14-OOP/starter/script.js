@@ -576,8 +576,9 @@ class Account {
   constructor(owner, currency, pin){
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+    this._pin = pin;
+    // protected property
+    this._movements = [];
     this.local = navigator.language;
 
     console.log(`thanks for opening an account, ${owner}`);
@@ -585,8 +586,13 @@ class Account {
 
   // Public interface
   //those methods are actually public interface to owr class so we call it API
+
+  getMovements(){
+    return this._movements;
+  }
+
   deposit(val){
-    this.movements.push(val);
+    this._movements.push(val);
   }
 
   withdraw(val){
@@ -594,13 +600,13 @@ class Account {
     this.deposit(-val);
   }
 
-  approveLoan(val){
+  _approveLoan(val){
     return true;
   }
 
   // in the public interface we only need this method, not the other methods
-  requestLoan(val){
-    if(this.approveLoan(val)) {
+  _requestLoan(val){
+    if(this._approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan Approved`);
     }
@@ -612,16 +618,24 @@ console.log(acc1);
 
 // so what a bout the movements array and the local, we want to start always with an empty array as the movements in this account, amd the local we will get from the navigator.language
 
-// we could add to the property movements array like that, but its not a good idea to interact with a property like that, instead we could create some mothods to handle the withdrawls and the deposits
-// acc1.movements.push(250);
-// acc1.movements.push(-140);
+// we could add to the property movements array like that, but its not a good idea to interact with a property like that, instead we could create some methods to handle the withdrawls and the deposits which will act like the API to our application preventing us from using private methods and property
+// evem with this underscore here we still have access to the movements array wich makes it not truly private
+acc1._movements.push(250);
+acc1._movements.push(-140);
 
 acc1.deposit(250);
 acc1.withdraw(140);
-acc1.requestLoan(1000);
-
+acc1._requestLoan(1000);
+console.log(acc1.getMovements());
 // acc1.approveLoan(1000); this is not allowed to be accessed
 // we could access any property from the acc1 or any other account and thats not a good practice
 // console.log(acc1.pin); thats not good
 
 // so we need Data encapsulation and data privacy
+
+//////////////////////////////////////////////////////////////////////
+// ENCAPSULATION: Protected Properties And Methods
+//--------------------------------------------------------------------
+// We want to hide certain properties and methods that are not relevant to the public interface.
+// These include the pin property, approveLoan method, movements array, local property, constructor function, requestLoan method, deposit method, and withdraw method.
+// By hiding these, we ensure that they cannot be accessed or manipulated from outside the class.
