@@ -571,57 +571,82 @@ jay.calcAge(); */
 // Another Class Example
 //--------------------------------------------------------------------
 
+// there are 4 types of properties and methods in classes and objects
+// 1) Public fields
+// 2) Private fields
+// 3) Public methods
+// 4) Private methods
+// there is also a static version of all of them but we will not use it here because its not supported in all the browsers yet.
 
 class Account {
-  constructor(owner, currency, pin){
+  // 1) public fields (instances) which will be on all the instances of the class and not on the prototype of the class like the methods and the constructor function and so on.
+  // they are referrancable by and via the this keyword
+  local = navigator.language;
+
+  // 2) private fields
+  // with the hash symbol we are saying that this is a private field and should not be accessed from outside the class
+  // we could use the private fields in the constructor function as well
+
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
+    // with the pin its different thatn the movemebts to make it private because we are setting it using the pin in the constructor function
+    this.#pin = pin;
     // protected property
-    this._movements = [];
-    this.local = navigator.language;
+    // this._movements = [];
+    // this.local = navigator.language;
 
     console.log(`thanks for opening an account, ${owner}`);
   }
 
+  // 3) public methods
   // Public interface
   //those methods are actually public interface to owr class so we call it API
 
-  getMovements(){
-    return this._movements;
+  getMovements() {
+    return this.#movements;
   }
 
-  deposit(val){
-    this._movements.push(val);
+  deposit(val) {
+    this.#movements.push(val);
   }
 
-  withdraw(val){
+  withdraw(val) {
     // we could pass a methods into other methods like that since we are basically doing the same.
     this.deposit(-val);
   }
-
-  _approveLoan(val){
-    return true;
-  }
-
+  
+  
   // in the public interface we only need this method, not the other methods
-  _requestLoan(val){
-    if(this._approveLoan(val)) {
+  _requestLoan(val) {
+    if (this._approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan Approved`);
     }
   }
+  
+  // 4) private methods
+  // we could use the hash symbol to make it private method as well but its not supported yet in the browsers so we will use the underscore instead to make it private method and not to be used outside the class. but its not a real private method because we could still access it from outside the class but its just a convention to not use it outside the class.
+
+  // #approveLoan(val) {
+
+  _approveLoan(val) {
+  return true;
+}
 }
 
-const acc1 = new Account('jonas', 'EURO', 1111)
+const acc1 = new Account('jonas', 'EURO', 1111);
 console.log(acc1);
 
 // so what a bout the movements array and the local, we want to start always with an empty array as the movements in this account, amd the local we will get from the navigator.language
 
 // we could add to the property movements array like that, but its not a good idea to interact with a property like that, instead we could create some methods to handle the withdrawls and the deposits which will act like the API to our application preventing us from using private methods and property
 // evem with this underscore here we still have access to the movements array wich makes it not truly private
-acc1._movements.push(250);
-acc1._movements.push(-140);
+// acc1._movements.push(250);
+// acc1._movements.push(-140);
 
 acc1.deposit(250);
 acc1.withdraw(140);
@@ -639,3 +664,15 @@ console.log(acc1.getMovements());
 // We want to hide certain properties and methods that are not relevant to the public interface.
 // These include the pin property, approveLoan method, movements array, local property, constructor function, requestLoan method, deposit method, and withdraw method.
 // By hiding these, we ensure that they cannot be accessed or manipulated from outside the class.
+/////////////////////////////////////////////////////////////////////
+// ENCAPSULATION: Protected Properties And Methods (TRULY)
+//-------------------------------------------------------------------
+// new feuture to be  added to the language Class fields, in the proposal stage now but we can use it with babel and webpack and other tools to use it now. so we will use it here.
+// in conventional oop languages we call the properties fields, but in JS we call them class fields. so we will use the hash symbol to make them private fields.
+
+
+//console.log(acc1.#movements); // uncaught SyntaxError: Private field '#movements' must be declared in an enclosing class
+
+// console.log(acc1.#pin); // uncaught SyntaxError: Private field '#pin' must be declared in an enclosing class
+
+//console.log(acc1.#approveLoan(100)); // uncaught SyntaxError: Private field '#approveLoan' must be declared in an enclosing class
