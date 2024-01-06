@@ -530,7 +530,7 @@ martha.calcAge(); */
 // Inheritance Between "Classes": Object.create.
 //-----------------------------------------------------------------------------------
 
-const PersonProto = {
+/* const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
   },
@@ -561,7 +561,7 @@ StudentProto.introduce = function () {
 
 jay.introduce();
 
-jay.calcAge();
+jay.calcAge(); */
 
 // we could do the same thing using the constructor function and the prototype chain but it will be more complicated and not as clean as the above code using the object.create method and the prototype chain inheritance between objects and classes and subclasses and so on. so we will not do it here.
 
@@ -572,8 +572,56 @@ jay.calcAge();
 //--------------------------------------------------------------------
 
 
+class Account {
+  constructor(owner, currency, pin){
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.local = navigator.language;
 
+    console.log(`thanks for opening an account, ${owner}`);
+  }
 
+  // Public interface
+  //those methods are actually public interface to owr class so we call it API
+  deposit(val){
+    this.movements.push(val);
+  }
 
+  withdraw(val){
+    // we could pass a methods into other methods like that since we are basically doing the same.
+    this.deposit(-val);
+  }
 
+  approveLoan(val){
+    return true;
+  }
 
+  // in the public interface we only need this method, not the other methods
+  requestLoan(val){
+    if(this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan Approved`);
+    }
+  }
+}
+
+const acc1 = new Account('jonas', 'EURO', 1111)
+console.log(acc1);
+
+// so what a bout the movements array and the local, we want to start always with an empty array as the movements in this account, amd the local we will get from the navigator.language
+
+// we could add to the property movements array like that, but its not a good idea to interact with a property like that, instead we could create some mothods to handle the withdrawls and the deposits
+// acc1.movements.push(250);
+// acc1.movements.push(-140);
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+
+// acc1.approveLoan(1000); this is not allowed to be accessed
+// we could access any property from the acc1 or any other account and thats not a good practice
+// console.log(acc1.pin); thats not good
+
+// so we need Data encapsulation and data privacy
