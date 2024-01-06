@@ -612,20 +612,23 @@ class Account {
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdraw(val) {
     // we could pass a methods into other methods like that since we are basically doing the same.
     this.deposit(-val);
+    return this;
   }
   
   
   // in the public interface we only need this method, not the other methods
-  _requestLoan(val) {
+  requestLoan(val) {
     if (this._approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan Approved`);
     }
+    return this
   }
   
   // 4) private methods
@@ -638,8 +641,8 @@ class Account {
 }
 }
 
-const acc1 = new Account('jonas', 'EURO', 1111);
-console.log(acc1);
+// const acc1 = new Account('jonas', 'EURO', 1111);
+// console.log(acc1);
 
 // so what a bout the movements array and the local, we want to start always with an empty array as the movements in this account, amd the local we will get from the navigator.language
 
@@ -648,10 +651,10 @@ console.log(acc1);
 // acc1._movements.push(250);
 // acc1._movements.push(-140);
 
-acc1.deposit(250);
-acc1.withdraw(140);
-acc1._requestLoan(1000);
-console.log(acc1.getMovements());
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+// console.log(acc1.getMovements());
 // acc1.approveLoan(1000); this is not allowed to be accessed
 // we could access any property from the acc1 or any other account and thats not a good practice
 // console.log(acc1.pin); thats not good
@@ -676,3 +679,11 @@ console.log(acc1.getMovements());
 // console.log(acc1.#pin); // uncaught SyntaxError: Private field '#pin' must be declared in an enclosing class
 
 //console.log(acc1.#approveLoan(100)); // uncaught SyntaxError: Private field '#approveLoan' must be declared in an enclosing class
+
+///////////////////////////////////////////////////////////////////
+// Chaining methods
+//-------------------------------------------------------------------
+
+// this would not work unless we return this(which is the object itself using the method) from each and every method used down here
+// acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+// console.log(acc1.getMovements());
