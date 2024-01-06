@@ -42,6 +42,8 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+let map, mapEvent;
+
 if (navigator.geolocation)
   // Geolocation API
   navigator.geolocation.getCurrentPosition(
@@ -52,7 +54,7 @@ if (navigator.geolocation)
       console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
       const coords = [latitude, longitude];
-      const map = L.map('map').setView(coords, 13);
+      map = L.map('map').setView(coords, 13);
       console.log(map);
 
       L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -60,27 +62,48 @@ if (navigator.geolocation)
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
-      map.on('click', function (mapEvent) {
-        console.log(mapEvent);
-        // using destructuring
-        const { lat, lng } = mapEvent.latlng;
-
-        L.marker([lat, lng])
-          .addTo(map)
-          .bindPopup(
-            L.popup({
-              maxWidth: 250,
-              minWidth: 100,
-              autoClose: false,
-              closeOnClick: false,
-              className: 'running-popup',
-            })
-          )
-          .setPopupContent('workout')
-          .openPopup();
+      // handling clicks on map
+      map.on('click', function (mapE) {
+        mapEvent = mapE;
+        form.classList.remove('hidden');
+        inputDistance.focus(); // start on distance
       });
     },
     function () {
       alert('Could not get your position');
     }
   );
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  //clear input feilds after submitting
+  inputDistance.value =
+    inputDuration.value =
+    inputCadence.value =
+    inputElevation.value =
+      '';
+  // Display Marker
+  console.log(mapEvent);
+  // using destructuring
+  const { lat, lng } = mapEvent.latlng;
+  L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        maxWidth: 250,
+        minWidth: 100,
+        autoClose: false,
+        closeOnClick: false,
+        className: 'running-popup',
+      })
+    )
+    .setPopupContent('workout')
+    .openPopup();
+});
+
+// toggle between cadence and elevation gain based on workout type selected (running or cycling) using event delegation on the parent element of the two input fields (form__row) and listening for the click event on the parent element and then checking if the target element is the inputType element and then toggling the hidden class on the two input fields (inputCadence and inputElevation) using the closest method to select the parent element of the two input fields (form__row) and then using the toggle method to toggle the hidden class on the parent element of the two input fields (form__row) which will toggle the hidden class on the two input fields (inputCadence and inputElevation) as well. The hidden class is used to hide the two input fields (inputCadence and inputElevation) by setting the display property to none.
+
+inputType.addEventListener('click', function () {
+  inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+});
