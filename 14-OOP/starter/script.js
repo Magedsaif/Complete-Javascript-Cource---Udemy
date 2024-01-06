@@ -463,7 +463,6 @@ Tesla.brake();
 Tesla.chargeBattery(90);
 Tesla.accelerate(); */
 
-
 /////////////////////////////////////////////////////////////////////
 // Inheritance Between "Classes": ES6 Classes.
 //-------------------------------------------------------------------
@@ -527,7 +526,6 @@ const martha = new StudentCl('Marthaa jonas', 2012, 'CS');
 martha.introduce();
 martha.calcAge(); */
 
-
 //////////////////////////////////////////////////////////////////////////////////////
 // Inheritance Between "Classes": Object.create.
 //-----------------------------------------------------------------------------------
@@ -546,14 +544,32 @@ const PersonProto = {
 //now we want to add another prototype in the middle of the chain
 const steven = Object.create(PersonProto);
 
-
 const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  // we call the init method from the parent class to set the firstName and birthYear properties on the new object that is created through the studentProto object
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
 
 const jay = Object.create(StudentProto);
 
+jay.init('jay', 2010, 'Cs');
 
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
 
+jay.introduce();
 
+jay.calcAge();
+
+// we could do the same thing using the constructor function and the prototype chain but it will be more complicated and not as clean as the above code using the object.create method and the prototype chain inheritance between objects and classes and subclasses and so on. so we will not do it here.
+
+// we dont have to use the new keyword when we use the object.create method because it doesnt use the constructor function to create the new object, it just uses the object that we passed in as the prototype of the new object that is created. so we dont have to use the new keyword. so we could use the object.create method to create a new object and then set the prototype of that object to any prototype we want.
+// its just objects linked to other objects and thats it.
+//////////////////////////////////////////////////////////////////////
+// Another Class Example
+//--------------------------------------------------------------------
 
 
 
