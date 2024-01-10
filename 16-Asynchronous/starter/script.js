@@ -2,7 +2,30 @@
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
+const renderError = function (msg) {
+    countriesContainer.insertAdjacentText('beforeend', msg);
+    countriesContainer.style.opacity = 1;
+    }
 
+    const renderCountry = function (data, className = '') {
+        const html = `<article class="country ${className}">
+                <img class="country__img" src="${data.flag}" />
+                <div class="country__data">
+                  <h3 class="country__name">${data.name}</h3>
+                  <h4 class="country__region">${data.region}</h4>
+                  <p class="country__row"><span>👫</span>${(
+                    +data.population / 1000000
+                  ).toFixed(1)} people</p>
+                  <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+                  <p class="country__row"><span>💰</span>${
+                    data.currencies[0].name
+                  }</p>
+                </div>
+              </article>`;
+      
+        countriesContainer.insertAdjacentHTML('beforeend', html);
+        countriesContainer.style.opacity = 1;
+      };
 //////////////////////////////////////////////////
 // ASYNCHRONOUS JAVASCRIPT. AJAX AND APIS
 // Asynchronous coordinats behavior of a program over a period of time.
@@ -129,23 +152,7 @@ setTimeout(() => {
 }, 1000); // this is an asynchronous function. it will be executed after 1 second. it will not block the code execution.
 
  */
-const renderCountry = function (data, className = '') {
-    const html = `<article class="country ${className}">
-          <img class="country__img" src="${data.flag}" />
-          <div class="country__data">
-            <h3 class="country__name">${data.name}</h3>
-            <h4 class="country__region">${data.region}</h4>
-            <p class="country__row"><span>👫</span>${(
-              +data.population / 1000000
-            ).toFixed(1)} people</p>
-            <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-            <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
-          </div>
-        </article>`;
-  
-    countriesContainer.insertAdjacentHTML('beforeend', html);
-    countriesContainer.style.opacity = 1;
-  };
+
 /////////////////////////////////////////////////////////////////////
 // PROMISES AND FETCH API
 //-------------------------------------------------------------------
@@ -177,11 +184,11 @@ const request = fetch('https://restcountries.com/v2/name/portugal'); // this wil
 
 // when returining a value, that value will become the fulfilled value of the promise returned by the then method.
 
+
+
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => {
-      return response.json(); // this will return a promise
-    })
+    .then(response => response.json())
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0].borders?.[0];
@@ -190,7 +197,23 @@ const getCountryData = function (country) {
       // return 23; // this will become the fulfilled value of the promise returned by the then method
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.error(`${err} 💥💥💥`);
+      renderError(`Something went wrong 💥💥💥 ${err.message}. Try again!`);
+    }).finally(() => {
+        countriesContainer.style.opacity = 1;
+    });
 };
 // thats a flat chain of promises.
-getCountryData('portugal');
+
+/////////////////////////////////////////////////////////////////////
+// Handling Rejected Promises
+//-------------------------------------------------------------------
+// we can handle rejected promises using the catch method. it will catch any error that happens in any of the promises in the chain.
+// errors basically propagate down the chain until they are caught, and only if they are not caught, they will be thrown to the outside of the promise chain, where they will become uncaught errors.
+
+
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
