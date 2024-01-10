@@ -65,10 +65,7 @@ getCountryData('portugal');
 // CALLBACK HELL
 //------------------------------------------------------------------
 
-
-
-
-
+/* 
 
 const renderCountry = function (data, className = '') {
   const html = `<article class="country ${className}">
@@ -131,3 +128,69 @@ setTimeout(() => {
   console.log('1 second passed');
 }, 1000); // this is an asynchronous function. it will be executed after 1 second. it will not block the code execution.
 
+ */
+const renderCountry = function (data, className = '') {
+    const html = `<article class="country ${className}">
+          <img class="country__img" src="${data.flag}" />
+          <div class="country__data">
+            <h3 class="country__name">${data.name}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${(
+              +data.population / 1000000
+            ).toFixed(1)} people</p>
+            <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+          </div>
+        </article>`;
+  
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+  };
+/////////////////////////////////////////////////////////////////////
+// PROMISES AND FETCH API
+//-------------------------------------------------------------------
+
+// Promises: object that is used as a placeholder for the future result of an asynchronous operation.
+// A promise is a container for an asynchronously delivered value.
+// A promise is a container for a future value. e.g. response from an AJAX call.
+
+// A promise is a special JavaScript object that links the production code and the consuming code together.
+
+// fetch API: modern way of making HTTP requests. It is a browser API, not a JS API. It returns a promise.
+
+// this is how we used to do it before promises
+// const request = new XMLHttpRequest();
+// request.open('GET', `https://restcountries.com/v2/name/${country}`);
+// request.send();
+
+// this is how we do it with promises
+
+const request = fetch('https://restcountries.com/v2/name/portugal'); // this will return a promise
+
+// we no longer need to create an event listener to listen to the load event. we can simply use the then method on the promise object to handle the response.
+
+// instead of nesting callbacks, we can chain promises for a sequence of asynchronous operations, one after another, where each one starts when the previous one finishes.: escaping callback hell.
+
+// the callback function in the then method will be called as soon as the promise is fulfilled. the response will be passed to the callback function as an argument which is the resulting value of the fullfilled promise.
+
+// then method always returns a promise. nomatter what we return from the callback function. if we return a value, the next then method will receive that value as an argument. if we return a promise, the next then method will wait for that promise to be fulfilled and then it will receive the resulting value as an argument.
+
+// when returining a value, that value will become the fulfilled value of the promise returned by the then method.
+
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => {
+      return response.json(); // this will return a promise
+    })
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders?.[0];
+      // country 2
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+      // return 23; // this will become the fulfilled value of the promise returned by the then method
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
+};
+// thats a flat chain of promises.
+getCountryData('portugal');
