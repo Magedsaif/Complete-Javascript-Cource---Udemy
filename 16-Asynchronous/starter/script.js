@@ -7,27 +7,27 @@ const renderError = function (msg) {
   countriesContainer.style.opacity = 1;
 };
 
-const renderCountry = function (data, className = '') {
-  const html = `<article class="country ${className}">
-                <img class="country__img" src="${data.flag}" />
-                <div class="country__data">
-                  <h3 class="country__name">${data.name}</h3>
-                  <h4 class="country__region">${data.region}</h4>
-                  <p class="country__row"><span>👫</span>${(
-                    +data.population / 1000000
-                  ).toFixed(1)} people</p>
-                  <p class="country__row"><span>🗣️</span>${
-                    data.languages[0].name
-                  }</p>
-                  <p class="country__row"><span>💰</span>${
-                    data.currencies[0].name
-                  }</p>
-                </div>
-              </article>`;
+// const renderCountry = function (data, className = '') {
+//   const html = `<article class="country ${className}">
+//                 <img class="country__img" src="${data.flag}" />
+//                 <div class="country__data">
+//                   <h3 class="country__name">${data.name}</h3>
+//                   <h4 class="country__region">${data.region}</h4>
+//                   <p class="country__row"><span>👫</span>${(
+//                     +data.population / 1000000
+//                   ).toFixed(1)} people</p>
+//                   <p class="country__row"><span>🗣️</span>${
+//                     data.languages[0].name
+//                   }</p>
+//                   <p class="country__row"><span>💰</span>${
+//                     data.currencies[0].name
+//                   }</p>
+//                 </div>
+//               </article>`;
 
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
+//   countriesContainer.insertAdjacentHTML('beforeend', html);
+//   countriesContainer.style.opacity = 1;
+// };
 //////////////////////////////////////////////////
 // ASYNCHRONOUS JAVASCRIPT. AJAX AND APIS
 // Asynchronous coordinats behavior of a program over a period of time.
@@ -193,7 +193,6 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
   });
 };
 
-
 // const getCountryData = function (country) {
 //   fetch(`https://restcountries.com/v2/name/${country}`)
 //     .then(response => {
@@ -224,34 +223,34 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 // };
 
 // refactor the above code using getJson function
-const getCountryData = function (country) {
-  // Country 1
-  getJSON(
-    `https://restcountries.eu/rest/v2/name/${country}`,
-    'Country not found'
-  )
-    .then(data => {
-      renderCountry(data[0]);
-      const neighbour = data[0].borders[0];
+// const getCountryData = function (country) {
+//   // Country 1
+//   getJSON(
+//     `https://restcountries.eu/rest/v2/name/${country}`,
+//     'Country not found'
+//   )
+//     .then(data => {
+//       renderCountry(data[0]);
+//       const neighbour = data[0].borders[0];
 
-      if (!neighbour) throw new Error('No neighbour found!');
+//       if (!neighbour) throw new Error('No neighbour found!');
 
-      // Country 2
-      return getJSON(
-        `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
-        'Country not found'
-      );
-    })
+//       // Country 2
+//       return getJSON(
+//         `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
+//         'Country not found'
+//       );
+//     })
 
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => {
-      console.error(`${err} 💥💥💥`);
-      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
-    });
-};
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(err => {
+//       console.error(`${err} 💥💥💥`);
+//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
 
 // thats a flat chain of promises.
 
@@ -262,11 +261,10 @@ const getCountryData = function (country) {
 // errors basically propagate down the chain until they are caught, and only if they are not caught, they will be thrown to the outside of the promise chain, where they will become uncaught errors.
 
 btn.addEventListener('click', function () {
-  getCountryData('portugal');
+  whereAmI(52.508, 13.381);
 });
 
 // getCountryData('ausdsfsdsd');
-
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -294,3 +292,26 @@ TEST COORDINATES 2: -33.933, 18.474
 
 GOOD LUCK 😀
 */
+const whereAmI = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}`);
+
+      return fetch(`https://restcountries.eu/rest/v2/name/${data.country}`);
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Country not found (${res.status})`);
+
+      return res.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => console.error(`${err.message} 💥`));
+};
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474);
