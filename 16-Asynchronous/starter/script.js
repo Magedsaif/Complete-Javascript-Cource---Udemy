@@ -2,10 +2,10 @@
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  countriesContainer.style.opacity = 1;
-};
+// const renderError = function (msg) {
+//   countriesContainer.insertAdjacentText('beforeend', msg);
+//   countriesContainer.style.opacity = 1;
+// };
 
 // const renderCountry = function (data, className = '') {
 //   const html = `<article class="country ${className}">
@@ -174,7 +174,7 @@ setTimeout(() => {
 
 // this is how we do it with promises
 
-const request = fetch('https://restcountries.com/v2/name/portugal'); // this will return a promise
+// const request = fetch('https://restcountries.com/v2/name/portugal'); // this will return a promise
 
 // we no longer need to create an event listener to listen to the load event. we can simply use the then method on the promise object to handle the response.
 
@@ -185,13 +185,13 @@ const request = fetch('https://restcountries.com/v2/name/portugal'); // this wil
 // then method always returns a promise. nomatter what we return from the callback function. if we return a value, the next then method will receive that value as an argument. if we return a promise, the next then method will wait for that promise to be fulfilled and then it will receive the resulting value as an argument.
 
 // when returining a value, that value will become the fulfilled value of the promise returned by the then method.
-const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+// const getJSON = function (url, errorMsg = 'Something went wrong') {
+//   return fetch(url).then(response => {
+//     if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
 
-    return response.json();
-  });
-};
+//     return response.json();
+//   });
+// };
 
 // const getCountryData = function (country) {
 //   fetch(`https://restcountries.com/v2/name/${country}`)
@@ -260,9 +260,9 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 // we can handle rejected promises using the catch method. it will catch any error that happens in any of the promises in the chain.
 // errors basically propagate down the chain until they are caught, and only if they are not caught, they will be thrown to the outside of the promise chain, where they will become uncaught errors.
 
-btn.addEventListener('click', function () {
-  whereAmI(52.508, 13.381);
-});
+// btn.addEventListener('click', function () {
+//   whereAmI(52.508, 13.381);
+// });
 
 // getCountryData('ausdsfsdsd');
 
@@ -292,26 +292,32 @@ TEST COORDINATES 2: -33.933, 18.474
 
 GOOD LUCK 😀
 */
-const whereAmI = function (lat, lng) {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then(res => {
-      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
-      return res.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log(`You are in ${data.city}, ${data.country}`);
+// const whereAmI = function (lat, lng) {
+//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+//     .then(res => {
+//       if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+//       return res.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.country}`);
 
-      return fetch(`https://restcountries.eu/rest/v2/name/${data.country}`);
-    })
-    .then(res => {
-      if (!res.ok) throw new Error(`Country not found (${res.status})`);
+//       return fetch(`https://restcountries.eu/rest/v2/name/${data.country}`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error(`Country not found (${res.status})`);
 
-      return res.json();
-    })
-    .then(data => renderCountry(data[0]))
-    .catch(err => console.error(`${err.message} 💥`));
-};
-whereAmI(52.508, 13.381);
-whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474);
+//       return res.json();
+//     })
+//     .then(data => renderCountry(data[0]))
+//     .catch(err => console.error(`${err.message} 💥`));
+// };
+// whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.873);
+// whereAmI(-33.933, 18.474);
+
+
+console.log(`Test start`);
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promis 1').then(res => console.log(res));
+class
