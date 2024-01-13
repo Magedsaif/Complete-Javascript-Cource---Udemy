@@ -323,7 +323,7 @@ GOOD LUCK 😀
 // the event loop takes tasks from the callback queue and puts them in the call stack, as soon as the call stack is empty.
 // promises resolve in the microtask queue, which has a higher priority than the callback queue. so promises are always resolved before the callback queue. thats why the message from the promise is logged before the message from the callback function in the setTimeout function.
 
-
+/*
 console.log(`Test start`);
 setTimeout(() => console.log('0 sec timer'), 0);
 Promise.resolve('Resolved promise 1').then(res => console.log(res));
@@ -332,3 +332,42 @@ Promise.resolve('Resolved promise 2').then(res => {
   console.log(res);
 });
 console.log(`Test End`);
+ */
+
+/////////////////////////////////////////////////////////////////////
+// BUILDING A SIMPLE PROMISE
+//-------------------------------------------------------------------
+
+// the promise object takes executor function as an argument. the executor function takes two arguments, resolve and reject. these are two functions that are automatically passed into the executor function by the promise constructor.
+/* 
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery is happenning');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('YOU WIN');
+    } else {
+      reject(new Error('You lost youe money'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+
+
+// promisifying means converting callback based asynchronous behavior to promise based asynchronous behavior.
+
+// promisifying setTimeout
+const wait = function(seconds){
+  return new Promise(function(resolve){
+    setTimeout(resolve, seconds * 1000);
+  })
+}
+
+wait(2).then(() => {
+  console.log('i wated for 2 seconds');
+  return wait(1);
+}).then(()=> console.log('i wated for 1 seconds'));
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('Problem')).catch(x => console.error(x));
+ */
