@@ -316,8 +316,19 @@ GOOD LUCK 😀
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 
+/////////////////////////////////////////////////////////////////////
+// THE EVENT LOOP IN PRACTICE
+//-------------------------------------------------------------------
+// the event loop is the secret behind the asynchronous behavior of JavaScript.
+// the event loop takes tasks from the callback queue and puts them in the call stack, as soon as the call stack is empty.
+// promises resolve in the microtask queue, which has a higher priority than the callback queue. so promises are always resolved before the callback queue. thats why the message from the promise is logged before the message from the callback function in the setTimeout function.
+
 
 console.log(`Test start`);
 setTimeout(() => console.log('0 sec timer'), 0);
-Promise.resolve('Resolved promis 1').then(res => console.log(res));
-class
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+console.log(`Test End`);
