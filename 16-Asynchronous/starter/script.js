@@ -435,45 +435,106 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
-const imgContainer = document.querySelector('.images');
+// const imgContainer = document.querySelector('.images');
 
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
-  });
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+
+// const createImage = function (imagePath) {
+//   return new Promise(function (resolve, reject) {
+//     const img = document.createElement('img');
+//     img.src = imagePath;
+//     img.addEventListener('load', () => {
+//       imgContainer.append(img);
+//       resolve(img);
+//     });
+//     img.addEventListener('error', function () {
+//       reject(new Error('Image not found'));
+//     });
+//   });
+// };
+
+// let currenImg;
+// createImage('img/img-1.jpg')
+//   .then(img => {
+//     currenImg = img;
+//     console.log('Image 1 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currenImg.style.display = 'none';
+//     return createImage('img/img-2.jpg');
+//   })
+//   .then(img => {
+//     currenImg = img;
+//     console.log('Image 2 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currenImg.style.display = 'none';
+//   })
+//   .catch(err => console.log(err));
+
+//////////////////////////////////////////////////////////////////////
+// consuming promises with AsyncAwait
+//-------------------------------------------------------------------
+// async await is just syntactic sugar over the promises. it is just a different way of writing promises. it makes the code look like synchronous code.
+
+// await will stop the code execution until the promise is fulfilled. await can only be used inside an async function.
+// async doesnt block the code execution. it is non blocking. it will return a promise. the promise will be fulfilled with the value that we return from the async function. if we dont return anything, the promise will be fulfilled with undefined. if we throw an error, the promise will be rejected with that error.
+// it makes the code look like synchronous code. but it is not. it is still asynchronous in the background, it is still promises. it is just syntactic sugar over promises.
+
+
+const renderCountry = function (data, className = '') {
+  const html = `<article class="country ${className}">
+      <img class="country__img" src="${data.flag}" />
+      <div class="country__data">
+        <h3 class="country__name">${data.name}</h3>
+        <h4 class="country__region">${data.region}</h4>
+        <p class="country__row"><span>👫</span>${(
+          +data.population / 1000000
+        ).toFixed(1)} people</p>
+        <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+        <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+      </div>
+    </article>`;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
 };
 
-const createImage = function (imagePath) {
+const getPosition = function () {
   return new Promise(function (resolve, reject) {
-    const img = document.createElement('img');
-    img.src = imagePath;
-    img.addEventListener('load', () => {
-      imgContainer.append(img);
-      resolve(img);
-    });
-    img.addEventListener('error', function () {
-      reject(new Error('Image not found'));
-    });
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 };
 
-let currenImg;
-createImage('img/img-1.jpg')
-  .then(img => {
-    currenImg = img;
-    console.log('Image 1 loaded');
-    return wait(2);
-  })
-  .then(() => {
-    currenImg.style.display = 'none';
-    return createImage('img/img-2.jpg');
-  })
-  .then(img => {
-    currenImg = img;
-    console.log('Image 2 loaded');
-    return wait(2);
-  })
-  .then(() => {
-    currenImg.style.display = 'none';
-  })
-  .catch(err => console.log(err));
+const whereAmI = async function (country) {
+
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+  const res = await fetch(`https://restcountries.eu/rest/v2/name/${country}`);
+  const data = await res.json(); // without chaining then method to the fetch promise, we can use await to get the data from the promise.
+  console.log(data);
+  renderCountry(data[0]);
+
+  // this is how we used to do it before async await.
+  // fetch(`https://restcountries.eu/rest/v2/name/${country}`).then(res => {
+  //   console.log(res);
+  //   return res.json();
+  // }).then(data => {
+  //   console.log(data);
+  //   renderCountry(data[0]);
+  // });
+};
+whereAmI('portugal');
+console.log('First');
