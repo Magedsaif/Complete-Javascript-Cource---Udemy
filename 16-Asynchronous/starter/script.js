@@ -593,16 +593,82 @@ const get3Countries = async function (c1, c2, c3) {
     // const [data3] = await getJSON(`https://restcountries.eu/v3.1/name/${c3}`);
     // console.log([data1.capital, data2.capital, data3.capital]);
 
-    // this 
+    // promise.all short circuits as soon as one promise rejects. so if one promise rejects, the whole promise.all will reject.
+    // combinator function: a function that takes multiple values and combines them into a single value.
     const data = await Promise.all([
       getJSON(`https://restcountries.eu/v3.1/name/${c1}`),
       getJSON(`https://restcountries.eu/v3.1/name/${c2}`),
       getJSON(`https://restcountries.eu/v3.1/name/${c3}`),
     ]);
-    console.log(data);
+    console.log(data.map(d => d[0].capital));
   } catch {
     console.log(err);
   }
 };
 
 get3Countries('portugal', 'canada', 'tanzania');
+
+//////////////////////////////////////////////////////////////////////
+// other promise combinators race, allsettled and any
+//-------------------------------------------------------------------
+
+// promise.race
+// takes an array of promises and returns a promise that will be fulfilled or rejected as soon as one of the input promises is fulfilled or rejected.
+// it is not short circuited. it will not ignore rejected promises. it will simply ignore the fulfilled promises. it will only return the first fulfilled or rejected promise. it will not return an array of values like promise.all.
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.eu/v3.1/name/italy`),
+    getJSON(`https://restcountries.eu/v3.1/name/egypt`),
+    getJSON(`https://restcountries.eu/v3.1/name/mexico`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long'));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.eu/v3.1/name/tanzania`),
+  timeout(0.5),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+
+// promise.allSettled
+// takes an array of promises and returns a promise that will be fulfilled as soon as all the input promises are settled. it will not short circuit. it will return an array of objects. each object will have a status property which will be either fulfilled or rejected. if the promise is fulfilled, it will have a value property which will be the fulfilled value of the promise. if the promise is rejected, it will have a reason property which will be the rejected reason of the promise.
+
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
+
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+
+  // promise.any
+
+  // takes an array of promises and returns a promise that will be fulfilled as soon as one of the input promises is fulfilled. it will ignore rejected promises. it will return the fulfilled value of the first fulfilled promise.
+
+  // it is not short circuited. it will not ignore rejected promises. it will simply ignore the fulfilled promises. it will only return the first fulfilled promise. it will not return an array of values like promise.all.
+  // it is not supported by all browsers yet. it is a new feature.
+  Promise.any([
+    Promise.resolve('Success'),
+    Promise.reject('Error'),
+    Promise.resolve('Another success'),
+  ])
+    .then(res => console.log(res))
+    .catch(err => console.error(err));
