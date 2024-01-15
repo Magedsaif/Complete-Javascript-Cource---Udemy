@@ -2,6 +2,39 @@
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
+
+const renderCountry = function (data, className = '') {
+  const html = `
+  <article class="country ${className}">
+    <img class="country__img" src="${data.flag}" />
+    <div class="country__data">
+      <h3 class="country__name">${data.name}</h3>
+      <h4 class="country__region">${data.region}</h4>
+      <p class="country__row"><span>👫</span>${(
+        +data.population / 1000000
+      ).toFixed(1)} people</p>
+      <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+      <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+    </div>
+  </article>
+  `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
+
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
 // const renderError = function (msg) {
 //   countriesContainer.insertAdjacentText('beforeend', msg);
 //   countriesContainer.style.opacity = 1;
@@ -339,7 +372,7 @@ console.log(`Test End`);
 //-------------------------------------------------------------------
 
 // the promise object takes executor function as an argument. the executor function takes two arguments, resolve and reject. these are two functions that are automatically passed into the executor function by the promise constructor.
-/* 
+/*
 const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Lottery is happenning');
   setTimeout(function () {
@@ -487,24 +520,6 @@ GOOD LUCK 😀
 // async doesnt block the code execution. it is non blocking. it will return a promise. the promise will be fulfilled with the value that we return from the async function. if we dont return anything, the promise will be fulfilled with undefined. if we throw an error, the promise will be rejected with that error.
 // it makes the code look like synchronous code. but it is not. it is still asynchronous in the background, it is still promises. it is just syntactic sugar over promises.
 
-const renderCountry = function (data, className = '') {
-  const html = `<article class="country ${className}">
-      <img class="country__img" src="${data.flag}" />
-      <div class="country__data">
-        <h3 class="country__name">${data.name}</h3>
-        <h4 class="country__region">${data.region}</h4>
-        <p class="country__row"><span>👫</span>${(
-          +data.population / 1000000
-        ).toFixed(1)} people</p>
-        <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-        <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
-      </div>
-    </article>`;
-
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
-
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -546,7 +561,7 @@ const whereAmI = async function (country) {
   // });
 };
 
-console.log('1: will get location');
+// console.log('1: will get location');
 // const city = whereAmI();
 // console.log(city);
 
@@ -558,12 +573,36 @@ console.log('1: will get location');
 // if we want to run the code in the order it is written, we can use IIFE.
 // IIFE: Immediately Invoked Function Expression
 // it is a function that is executed right after it is created.
-(async function () {
+// (async function () {
+//   try {
+//     const city = await whereAmI();
+//     console.log(`2: ${city}`);
+//   } catch (err) {
+//     console.error(`3: ${err}`);
+//   }
+//   console.log('3: finished getting location');
+// })();
+
+// running promises in parallel
+
+const get3Countries = async function (c1, c2, c3) {
   try {
-    const city = await whereAmI();
-    console.log(`2: ${city}`);
-  } catch (err) {
-    console.error(`3: ${err}`);
+    // these will run in series. one after another. which is not efficient. we want to run them in parallel.
+    // const [data1] = await getJSON(`https://restcountries.eu/v3.1/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.eu/v3.1/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.eu/v3.1/name/${c3}`);
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // this 
+    const data = await Promise.all([
+      getJSON(`https://restcountries.eu/v3.1/name/${c1}`),
+      getJSON(`https://restcountries.eu/v3.1/name/${c2}`),
+      getJSON(`https://restcountries.eu/v3.1/name/${c3}`),
+    ]);
+    console.log(data);
+  } catch {
+    console.log(err);
   }
-  console.log('3: finished getting location');
-})();
+};
+
+get3Countries('portugal', 'canada', 'tanzania');
