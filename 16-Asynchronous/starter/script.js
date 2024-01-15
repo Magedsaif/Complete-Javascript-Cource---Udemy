@@ -487,7 +487,6 @@ GOOD LUCK 😀
 // async doesnt block the code execution. it is non blocking. it will return a promise. the promise will be fulfilled with the value that we return from the async function. if we dont return anything, the promise will be fulfilled with undefined. if we throw an error, the promise will be rejected with that error.
 // it makes the code look like synchronous code. but it is not. it is still asynchronous in the background, it is still promises. it is just syntactic sugar over promises.
 
-
 const renderCountry = function (data, className = '') {
   const html = `<article class="country ${className}">
       <img class="country__img" src="${data.flag}" />
@@ -513,19 +512,26 @@ const getPosition = function () {
 };
 
 const whereAmI = async function (country) {
+  try {
+    // Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  // Geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
-
-  // reverse geocoding
-  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
-  const res = await fetch(`https://restcountries.eu/rest/v2/name/${country}`);
-  const data = await res.json(); // without chaining then method to the fetch promise, we can use await to get the data from the promise.
-  console.log(data);
-  renderCountry(data[0]);
+    // reverse geocoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if(!resGeo.ok) throw new Error('Problem getting location data');
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+    const res = await fetch(`https://restcountries.eu/rest/v2/name/${country}`);
+    if(!res.ok) throw new Error('Problem getting country');
+    const data = await res.json(); // without chaining then method to the fetch promise, we can use await to get the data from the promise.
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    // catch block will catch any error that happens in the try block or in any of the promises in the try block. if we dont catch the error, it will be thrown to the outside of the async function, where it will become an uncaught error.
+    console.error(`${err} 💥💥💥`);
+    renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+  }
 
   // this is how we used to do it before async await.
   // fetch(`https://restcountries.eu/rest/v2/name/${country}`).then(res => {
@@ -536,5 +542,6 @@ const whereAmI = async function (country) {
   //   renderCountry(data[0]);
   // });
 };
-whereAmI('portugal');
+whereAmI();
+
 console.log('First');
