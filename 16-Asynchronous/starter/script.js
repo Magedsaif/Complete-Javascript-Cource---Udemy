@@ -519,18 +519,21 @@ const whereAmI = async function (country) {
 
     // reverse geocoding
     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-    if(!resGeo.ok) throw new Error('Problem getting location data');
+    if (!resGeo.ok) throw new Error('Problem getting location data');
     const dataGeo = await resGeo.json();
-    console.log(dataGeo);
     const res = await fetch(`https://restcountries.eu/rest/v2/name/${country}`);
-    if(!res.ok) throw new Error('Problem getting country');
+    if (!res.ok) throw new Error('Problem getting country');
     const data = await res.json(); // without chaining then method to the fetch promise, we can use await to get the data from the promise.
-    console.log(data);
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     // catch block will catch any error that happens in the try block or in any of the promises in the try block. if we dont catch the error, it will be thrown to the outside of the async function, where it will become an uncaught error.
     console.error(`${err} 💥💥💥`);
     renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+
+    // reject promise returned from async function
+    throw err;
   }
 
   // this is how we used to do it before async await.
@@ -542,6 +545,25 @@ const whereAmI = async function (country) {
   //   renderCountry(data[0]);
   // });
 };
-whereAmI();
 
-console.log('First');
+console.log('1: will get location');
+// const city = whereAmI();
+// console.log(city);
+
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`3: ${err}`))
+//   .finally(() => console.log('3: finished getting location'));
+
+// if we want to run the code in the order it is written, we can use IIFE.
+// IIFE: Immediately Invoked Function Expression
+// it is a function that is executed right after it is created.
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`3: ${err}`);
+  }
+  console.log('3: finished getting location');
+})();
