@@ -593,13 +593,14 @@ const get3Countries = async function (c1, c2, c3) {
     // const [data3] = await getJSON(`https://restcountries.eu/v3.1/name/${c3}`);
     // console.log([data1.capital, data2.capital, data3.capital]);
 
-    // this 
+    // promise.all short circuits as soon as one promise rejects. so if one promise rejects, the whole promise.all will reject.
+    // combinator function: a function that takes multiple values and combines them into a single value.
     const data = await Promise.all([
       getJSON(`https://restcountries.eu/v3.1/name/${c1}`),
       getJSON(`https://restcountries.eu/v3.1/name/${c2}`),
       getJSON(`https://restcountries.eu/v3.1/name/${c3}`),
-    ]);
-    console.log(data);
+    ]); 
+    console.log(data.map(d => d[0].capital));
   } catch {
     console.log(err);
   }
