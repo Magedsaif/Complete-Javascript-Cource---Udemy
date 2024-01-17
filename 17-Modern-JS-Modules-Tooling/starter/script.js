@@ -13,13 +13,11 @@
 // import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // add('pizza', 2);
 
-/* import add, { cart } from './shoppingCart.js';
+import add, { cart } from './shoppingCart.js';
 add('pizza', 2);
 add('bread', 2);
 add('apples', 2);
 
-console.log(cart);
- */
 // console.log('Start fetching');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
 // const data = await res.json();
@@ -107,7 +105,7 @@ console.log(shoppingCart2.shippingCost);// undifined because we didnt make it pu
 // const { addToCart } = require('./shoppingCart.js');
 
 // intro to NPM
-import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -123,3 +121,8 @@ state.user.loggedIn = false;
 console.log(stateClone); // now its false
 console.log(stateDeepClone);
 
+// BUNDLING WITH PARCEL AND NPM SCRIPTS
+
+if (module.hot) {
+  module.hot.accept();
+}
