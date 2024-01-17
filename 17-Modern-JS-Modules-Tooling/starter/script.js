@@ -13,13 +13,13 @@
 // import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // add('pizza', 2);
 
-import add, { cart } from './shoppingCart.js';
+/* import add, { cart } from './shoppingCart.js';
 add('pizza', 2);
 add('bread', 2);
 add('apples', 2);
 
 console.log(cart);
-
+ */
 // console.log('Start fetching');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
 // const data = await res.json();
@@ -27,7 +27,7 @@ console.log(cart);
 
 // console.log('something');
 
-const getLastPost = async function () {
+/* const getLastPost = async function () {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts');
   const data = await res.json();
   console.log(data);
@@ -43,4 +43,8 @@ lastPost.then(last => console.log(last))
 
 
 const lastPost2 = await getLastPost();
-console.log(lastPost2);
+console.log(lastPost2); */
+
+//////////////////////////////////////////////////////////////////////
+// the module pattern
+//--------------------------------------------------------------------
