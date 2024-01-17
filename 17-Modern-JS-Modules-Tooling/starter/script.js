@@ -48,3 +48,39 @@ console.log(lastPost2); */
 //////////////////////////////////////////////////////////////////////
 // the module pattern
 //--------------------------------------------------------------------
+
+// IFIE
+const shoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to cart (shipping cost is ${shippingCost})`);
+  };
+
+  const orderStock = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} order from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+
+shoppingCart2.addToCart('apple', 4);
+shoppingCart2.addToCart('pizza', 2);
+
+console.log(shoppingCart2);
+console.log(shoppingCart2.shippingCost);// undifined because we didnt make it public and thats the implementation of the module pattern
+
+// this IFIE has returned  ago, so how i had the oppurtinuity to manipulate the cart variable
+
+// closures allow a function to have access to all the variables that were present in its birthplace
