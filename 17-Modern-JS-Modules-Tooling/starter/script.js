@@ -105,3 +105,21 @@ console.log(shoppingCart2.shippingCost);// undifined because we didnt make it pu
 
 // // import
 // const { addToCart } = require('./shoppingCart.js');
+
+// intro to NPM
+import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+
+const state = {
+  cart: [
+    { product: 'bread', quantity: 5 },
+    { product: 'pizza', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+
+const stateClone = Object.assign({}, state);
+const stateDeepClone = cloneDeep(state); // still true in logged in
+state.user.loggedIn = false;
+console.log(stateClone); // now its false
+console.log(stateDeepClone);
+
