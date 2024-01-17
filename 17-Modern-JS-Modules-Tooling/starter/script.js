@@ -50,7 +50,7 @@ console.log(lastPost2); */
 //--------------------------------------------------------------------
 
 // IFIE
-const shoppingCart2 = (function () {
+/* const shoppingCart2 = (function () {
   const cart = [];
   const shippingCost = 10;
   const totalPrice = 237;
@@ -83,4 +83,25 @@ console.log(shoppingCart2.shippingCost);// undifined because we didnt make it pu
 
 // this IFIE has returned  ago, so how i had the oppurtinuity to manipulate the cart variable
 
-// closures allow a function to have access to all the variables that were present in its birthplace
+// closures allow a function to have access to all the variables that were present in its birthplace */
+
+/////////////////////////////////////////////////////////////////////
+// Common JS Modules
+//-------------------------------------------------------------------
+
+// common js modules are used in node js and not in the browser (node js is a runtime environment for js outside the browser)
+
+// just like es6 modules, in common js modules, each file is a module and all the variables and functions defined in that module are scoped to that module and not visible outside of it
+
+// in common js modules, we use require function to import functionality from other modules
+
+// in common js modules, we use module.exports to export functionality from a module
+
+// // export
+// export.addToCart = function (product, quantity) {
+//   cart.push({ product, quantity });
+//   console.log(`${quantity} ${product} added to cart (shipping cost is ${shippingCost})`);
+// };
+
+// // import
+// const { addToCart } = require('./shoppingCart.js');
