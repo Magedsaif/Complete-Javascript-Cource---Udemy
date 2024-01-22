@@ -217,9 +217,7 @@ class App {
     // Hide form + clear input fields
     this._hideForm();
 
-    //clear input feilds after submitting
-    // Display Marker
-    // using destructuring
+    // set local storage to all workouts
   }
 
   _renderWorkoutMarker(workout) {
